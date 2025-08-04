@@ -17,9 +17,9 @@ export function Hero({
     <section className={cn(
       'relative overflow-hidden',
       isFullWidth ? [
-        'min-h-screen flex items-center justify-center px-8 lg:px-6 md:px-4',
-        // Extend to edges and handle any top spacing
-        'w-screen -mt-4 -ml-4 pl-4'
+        'h-screen flex items-center justify-center px-8 lg:px-6 md:px-4',
+        // Full viewport coverage with proper positioning
+        'w-screen -ml-[50vw] left-1/2'
       ] : 'py-24 my-12 px-8 lg:px-6 md:px-4'
     )}>
       {/* Background gradient effect */}

@@ -90,7 +90,7 @@ export default async function PresentationPage({ params }: PageProps) {
     return (
       <ErrorBoundary>
         <Suspense fallback={<PresentationLoading />}>
-          <div className="min-h-screen bg-page">
+          <div className="min-h-screen bg-page -m-0 p-0">
             <MDXContent />
           </div>
         </Suspense>
