@@ -1,0 +1,87 @@
+export const metadata = {
+  title: "Q4 2024 Business Results",
+  date: "2024-12-31",
+  type: "business-presentation",
+  description: "Comprehensive Q4 2024 performance review showcasing record growth across all key metrics"
+}
+
+<Hero 
+  title="Q4 2024 Performance" 
+  subtitle="Record growth across all metrics"
+  highlight="34%"
+  highlightLabel="Revenue Growth"
+  layout="full-width"
+/>
+
+<MetricGrid 
+  metrics={[
+    {label: "Revenue", value: 2.4, unit: "M", change: 34},
+    {label: "New Users", value: 15.6, unit: "K", change: 28},
+    {label: "Conversion Rate", value: 4.2, unit: "%", change: 12},
+    {label: "Customer LTV", value: 890, unit: "$", change: 18}
+  ]}
+  columns={4}
+/>
+
+<ChartSection 
+  title="Monthly Revenue Growth"
+  type="line"
+  layout="text-chart"
+  data={[
+    {name: "Oct", value: 1.8},
+    {name: "Nov", value: 2.1}, 
+    {name: "Dec", value: 2.4}
+  ]}
+  colorScheme="success"
+>
+  Revenue accelerated throughout Q4, driven by strong customer acquisition and improved conversion rates. December marked our strongest month ever with $2.4M in revenue.
+</ChartSection>
+
+<CalloutBox emphasis="success">
+  🎯 **Key Achievement**: Exceeded annual revenue target by 15% with strongest Q4 in company history
+</CalloutBox>
+
+<ChartSection 
+  title="Customer Acquisition by Channel"
+  type="bar"
+  layout="full-width"
+  data={[
+    {name: "Organic Search", value: 4200},
+    {name: "Paid Ads", value: 3100},
+    {name: "Referral", value: 2800},
+    {name: "Social Media", value: 1900},
+    {name: "Email", value: 1200}
+  ]}
+  colorScheme="primary"
+>
+  Organic search continues to be our strongest acquisition channel, while paid advertising showed remarkable 45% improvement in cost efficiency.
+</ChartSection>
+
+<Timeline 
+  items={[
+    {title: "Q1 Foundation", description: "Built core infrastructure and launched MVP", status: "completed"},
+    {title: "Q2-Q3 Growth", description: "Scaled operations and expanded team", status: "completed"},
+    {title: "Q4 Acceleration", description: "Record performance and market expansion", status: "current"}
+  ]}
+  orientation="horizontal"
+/>
+
+<Section title="Key Insights & Next Steps" layout="centered">
+  Our Q4 performance demonstrates the strength of our growth strategy and market positioning. Key factors driving this success:
+
+  **Growth Drivers:**
+  - Enhanced product-market fit with 89% customer satisfaction
+  - Improved conversion funnel optimization (+12% conversion rate)
+  - Strategic partnerships expanding our reach by 40%
+  - Team scaling with 15 new hires across engineering and sales
+
+  **2025 Priorities:**
+  1. **International Expansion**: Target European markets in Q1
+  2. **Product Innovation**: Launch AI-powered features in Q2
+  3. **Team Growth**: Scale to 50 employees by year-end
+  4. **Revenue Target**: Achieve $15M ARR by Q4 2025
+</Section>
+
+<CalloutBox emphasis="highlight">
+  💡 **Looking Forward**: With this momentum, we're positioned to become the market leader in our category by end of 2025
+</CalloutBox>

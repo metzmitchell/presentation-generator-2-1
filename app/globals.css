@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark theme colors */
+    --bg-page: #0f1419;
+    --bg-card: #1a1f29;
+    --bg-surface: #242b38;
+    --text-primary: #ffffff;
+    --text-secondary: #b8c4d0;
+    --text-muted: #8a96a3;
+    --accent-blue: #4a9eff;
+    --accent-green: #52c93f;
+    --accent-orange: #ff8c42;
+    --accent-red: #ff5757;
+    --accent-purple: #b084ff;
+    --accent-yellow: #ffcc33;
+    --border: #2d3748;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-primary;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Typography hierarchy */
+  h1 {
+    @apply text-5xl font-bold text-primary;
+  }
+
+  h2 {
+    @apply text-4xl font-bold text-primary;
+  }
+
+  h3 {
+    @apply text-3xl font-semibold text-primary;
+  }
+
+  h4 {
+    @apply text-2xl font-semibold text-primary;
+  }
+
+  p {
+    @apply text-lg text-primary leading-relaxed;
+  }
+
+  /* Custom scrollbar for dark theme */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg-card);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+  }
+}
+
+@layer components {
+  /* Card styles */
+  .card {
+    @apply bg-card rounded-xl border border-border;
+  }
+
+  /* Button styles */
+  .btn-primary {
+    @apply bg-accent-blue hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-lg transition-colors;
+  }
+
+  /* Layout containers */
+  .section {
+    @apply py-16 px-8;
+  }
+
+  .container-max {
+    @apply max-w-7xl mx-auto;
+  }
+
+  /* Prose markdown styling - ensure it overrides global styles */
+  .prose strong {
+    @apply font-bold text-white;
+  }
+  
+  .prose em {
+    @apply font-medium not-italic;
+  }
+
+  /* Ensure bold text in prose is visible and highlighted */
+  .prose-invert strong {
+    @apply !text-white !font-bold;
+  }
+
+  /* Animation classes - these are already defined in tailwind.config.js */
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Ensure consistent rendering */
+  .text-balance {
+    text-wrap: balance;
+  }
+}
