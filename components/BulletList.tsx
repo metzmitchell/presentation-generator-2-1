@@ -157,6 +157,74 @@ export function BulletList({
     )
   }
 
+  const renderContent = (content: ReactNode) => {
+    // If content is a string, render it with markdown styling
+    if (typeof content === 'string') {
+      return (
+        <div 
+          className={cn(
+            'prose prose-invert max-w-none',
+            variant === 'enhanced' ? 'prose-base' : 'prose-sm',
+            'prose-p:text-secondary prose-p:mb-3 prose-p:leading-relaxed',
+            'prose-ul:list-none prose-ul:ml-0 prose-li:text-secondary prose-li:mb-2',
+            'prose-li:flex prose-li:items-start prose-li:gap-3',
+            'prose-li:before:content-["→"] prose-li:before:text-accent-blue prose-li:before:font-bold prose-li:before:shrink-0',
+            'prose-strong:text-white prose-strong:font-bold prose-strong:bg-accent-blue/20 prose-strong:px-2 prose-strong:py-1 prose-strong:rounded-md prose-strong:not-italic',
+            'prose-em:text-accent-blue prose-em:not-italic prose-em:font-medium',
+            'prose-h1:text-white prose-h1:font-display prose-h1:font-bold prose-h1:text-2xl prose-h1:mb-4',
+            'prose-h2:text-white prose-h2:font-display prose-h2:font-bold prose-h2:text-xl prose-h2:mb-3',
+            'prose-h3:text-white prose-h3:font-display prose-h3:font-bold prose-h3:text-lg prose-h3:mb-2',
+            'prose-h4:text-white prose-h4:font-display prose-h4:font-bold prose-h4:text-base prose-h4:mb-2',
+            'prose-h5:text-white prose-h5:font-display prose-h5:font-bold prose-h5:text-sm prose-h5:mb-2',
+            'prose-h6:text-white prose-h6:font-display prose-h6:font-bold prose-h6:text-xs prose-h6:mb-2',
+            'prose-blockquote:border-l-4 prose-blockquote:border-accent-blue prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-secondary',
+            'prose-code:text-accent-blue prose-code:bg-surface/50 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm',
+            'prose-pre:bg-surface/50 prose-pre:border prose-pre:border-border/30 prose-pre:rounded-lg prose-pre:p-4',
+            'prose-a:text-accent-blue prose-a:underline prose-a:decoration-accent-blue/50 prose-a:underline-offset-2 hover:prose-a:decoration-accent-blue',
+            'prose-table:border-collapse prose-table:w-full',
+            'prose-th:border prose-th:border-border/30 prose-th:bg-surface/50 prose-th:px-4 prose-th:py-2 prose-th:text-left prose-th:font-bold',
+            'prose-td:border prose-td:border-border/30 prose-td:px-4 prose-td:py-2',
+          )}
+          dangerouslySetInnerHTML={{ 
+            __html: content
+              .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+              .replace(/\*(.*?)\*/g, '<em>$1</em>')
+              .replace(/`(.*?)`/g, '<code>$1</code>')
+          }}
+        />
+      )
+    }
+    
+    // If content is already ReactNode, render it with prose styling
+    return (
+      <div className={cn(
+        'prose prose-invert max-w-none',
+        variant === 'enhanced' ? 'prose-base' : 'prose-sm',
+        'prose-p:text-secondary prose-p:mb-3 prose-p:leading-relaxed',
+        'prose-ul:list-none prose-ul:ml-0 prose-li:text-secondary prose-li:mb-2',
+        'prose-li:flex prose-li:items-start prose-li:gap-3',
+        'prose-li:before:content-["→"] prose-li:before:text-accent-blue prose-li:before:font-bold prose-li:before:shrink-0',
+        'prose-strong:text-white prose-strong:font-bold prose-strong:bg-accent-blue/20 prose-strong:px-2 prose-strong:py-1 prose-strong:rounded-md prose-strong:not-italic',
+        'prose-em:text-accent-blue prose-em:not-italic prose-em:font-medium',
+        'prose-h1:text-white prose-h1:font-display prose-h1:font-bold prose-h1:text-2xl prose-h1:mb-4',
+        'prose-h2:text-white prose-h2:font-display prose-h2:font-bold prose-h2:text-xl prose-h2:mb-3',
+        'prose-h3:text-white prose-h3:font-display prose-h3:font-bold prose-h3:text-lg prose-h3:mb-2',
+        'prose-h4:text-white prose-h4:font-display prose-h4:font-bold prose-h4:text-base prose-h4:mb-2',
+        'prose-h5:text-white prose-h5:font-display prose-h5:font-bold prose-h5:text-sm prose-h5:mb-2',
+        'prose-h6:text-white prose-h6:font-display prose-h6:font-bold prose-h6:text-xs prose-h6:mb-2',
+        'prose-blockquote:border-l-4 prose-blockquote:border-accent-blue prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-secondary',
+        'prose-code:text-accent-blue prose-code:bg-surface/50 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm',
+        'prose-pre:bg-surface/50 prose-pre:border prose-pre:border-border/30 prose-pre:rounded-lg prose-pre:p-4',
+        'prose-a:text-accent-blue prose-a:underline prose-a:decoration-accent-blue/50 prose-a:underline-offset-2 hover:prose-a:decoration-accent-blue',
+        'prose-table:border-collapse prose-table:w-full',
+        'prose-th:border prose-th:border-border/30 prose-th:bg-surface/50 prose-th:px-4 prose-th:py-2 prose-th:text-left prose-th:font-bold',
+        'prose-td:border prose-td:border-border/30 prose-td:px-4 prose-td:py-2',
+      )}>
+        {content}
+      </div>
+    )
+  }
+
   return (
     <section className="px-8 lg:px-6 md:px-4 py-16 my-12">
       <div className="max-w-6xl mx-auto">
@@ -197,18 +265,7 @@ export function BulletList({
               </h4>
             )}
             
-            <div className={cn(
-              'prose prose-invert max-w-none',
-              variant === 'enhanced' ? 'prose-base' : 'prose-sm',
-              'prose-p:text-secondary prose-p:mb-3 prose-p:leading-relaxed',
-              'prose-ul:list-none prose-ul:ml-0 prose-li:text-secondary prose-li:mb-2',
-              'prose-li:flex prose-li:items-start prose-li:gap-3',
-              'prose-li:before:content-["→"] prose-li:before:text-accent-blue prose-li:before:font-bold prose-li:before:shrink-0',
-              'prose-strong:text-white prose-strong:font-bold prose-strong:bg-accent-blue/20 prose-strong:px-2 prose-strong:py-1 prose-strong:rounded-md prose-strong:not-italic',
-              'prose-em:text-accent-blue prose-em:not-italic prose-em:font-medium',
-            )}>
-              {item.content}
-            </div>
+            {renderContent(item.content)}
           </div>
         </div>
           ))}
