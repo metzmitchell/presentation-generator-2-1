@@ -16,9 +16,10 @@ export interface ValidationResult<T> {
 
 /**
  * Validates chart data format
- * Ensures data follows {name: string, value: number}[] format
+ * Ensures data follows {name: string, value: number}[] format for single-line charts
+ * or {name: string, [key: string]: number}[] format for multi-line charts
  */
-export function validateChartData(data: any): ValidationResult<ChartData[]> {
+export function validateChartData(data: any, dataKeys?: string[]): ValidationResult<ChartData[]> {
   const errors: string[] = [];
   
   if (!Array.isArray(data)) {
@@ -36,6 +37,7 @@ export function validateChartData(data: any): ValidationResult<ChartData[]> {
   }
 
   const validatedData: ChartData[] = [];
+  const keysToValidate = dataKeys || ['value'];
 
   data.forEach((item, index) => {
     if (!item || typeof item !== 'object') {
@@ -48,15 +50,32 @@ export function validateChartData(data: any): ValidationResult<ChartData[]> {
       return;
     }
 
-    if (typeof item.value !== 'number' || !isFinite(item.value)) {
-      errors.push(`Item at index ${index} must have a 'value' property of type number`);
-      return;
+    // Validate each required data key
+    const validatedItem: ChartData = { name: item.name, value: 0 };
+    let hasValidData = false;
+
+    keysToValidate.forEach(key => {
+      if (item[key] !== undefined) {
+        if (typeof item[key] !== 'number' || !isFinite(item[key])) {
+          errors.push(`Item at index ${index} must have a '${key}' property of type number`);
+          return;
+        }
+        validatedItem[key] = item[key];
+        hasValidData = true;
+      }
+    });
+
+    // For backward compatibility, ensure 'value' exists (use first data key if not provided)
+    if (!validatedItem.value && keysToValidate.length > 0 && validatedItem[keysToValidate[0]] !== undefined) {
+      const firstKeyValue = validatedItem[keysToValidate[0]];
+      if (typeof firstKeyValue === 'number') {
+        validatedItem.value = firstKeyValue;
+      }
     }
 
-    validatedData.push({
-      name: item.name,
-      value: item.value
-    });
+    if (hasValidData) {
+      validatedData.push(validatedItem);
+    }
   });
 
   return {

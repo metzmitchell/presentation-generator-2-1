@@ -33,11 +33,13 @@ export function ChartSection({
   colorScheme = 'primary',
   layout = 'text-chart',
   children,
+  dataKeys = ['value'],
+  seriesNames,
 }: ChartSectionProps) {
   // Validate and sanitize inputs
   const validatedType = validateChartType(type)
   const validatedColorScheme = validateColorScheme(colorScheme)
-  const validationResult = validateChartData(data)
+  const validationResult = validateChartData(data, dataKeys)
   
   // Use fallback data if validation fails
   const chartData = validationResult.valid ? validationResult.data! : createChartFallback(validatedType)
@@ -87,9 +89,14 @@ export function ChartSection({
       return (
         <div className="bg-surface p-3 rounded-lg border border-border">
           <p className="text-sm text-secondary">{label}</p>
-          <p className="text-lg font-semibold text-white">
-            {payload[0].value.toLocaleString()}
-          </p>
+          {payload.map((entry: any, index: number) => (
+            <p key={index} className="text-lg font-semibold text-white">
+              {entry.name && entry.name !== entry.dataKey && (
+                <span style={{ color: entry.color }}>{entry.name}: </span>
+              )}
+              {entry.value.toLocaleString()}
+            </p>
+          ))}
         </div>
       )
     }
@@ -131,14 +138,32 @@ export function ChartSection({
             <XAxis dataKey="name" {...axisProps} />
             <YAxis {...axisProps} />
             <Tooltip content={<CustomTooltip />} />
-            <Line 
-              type="monotone" 
-              dataKey="value" 
-              stroke={chartColor} 
-              strokeWidth={3}
-              dot={{ fill: chartColor, r: 6 }}
-              activeDot={{ r: 8 }}
-            />
+            {dataKeys.map((key, index) => {
+              // For multi-line charts, use categorical colors; for single-line, use color scheme
+              const color = dataKeys.length > 1 
+                ? chartColors.categorical[index % chartColors.categorical.length]
+                : chartColors[validatedColorScheme as keyof typeof chartColors][0];
+              
+              return (
+                <Line 
+                  key={key}
+                  type="monotone" 
+                  dataKey={key} 
+                  stroke={color} 
+                  strokeWidth={3}
+                  dot={{ fill: color, r: 6 }}
+                  activeDot={{ r: 8 }}
+                  name={seriesNames?.[index] || key}
+                />
+              );
+            })}
+            {dataKeys.length > 1 && (
+              <Legend 
+                verticalAlign="bottom" 
+                height={36}
+                wrapperStyle={{ color: colors.text.secondary }}
+              />
+            )}
           </LineChart>
         )
         
@@ -175,14 +200,32 @@ export function ChartSection({
             <XAxis dataKey="name" {...axisProps} />
             <YAxis {...axisProps} />
             <Tooltip content={<CustomTooltip />} />
-            <Area 
-              type="monotone" 
-              dataKey="value" 
-              stroke={chartColor}
-              strokeWidth={2}
-              fill={chartColor}
-              fillOpacity={0.3}
-            />
+            {dataKeys.map((key, index) => {
+              // For multi-area charts, use categorical colors; for single-area, use color scheme
+              const color = dataKeys.length > 1 
+                ? chartColors.categorical[index % chartColors.categorical.length]
+                : chartColors[validatedColorScheme as keyof typeof chartColors][0];
+              
+              return (
+                <Area 
+                  key={key}
+                  type="monotone" 
+                  dataKey={key} 
+                  stroke={color}
+                  strokeWidth={2}
+                  fill={color}
+                  fillOpacity={0.3}
+                  name={seriesNames?.[index] || key}
+                />
+              );
+            })}
+            {dataKeys.length > 1 && (
+              <Legend 
+                verticalAlign="bottom" 
+                height={36}
+                wrapperStyle={{ color: colors.text.secondary }}
+              />
+            )}
           </AreaChart>
         )
         

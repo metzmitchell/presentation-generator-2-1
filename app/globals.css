@@ -85,7 +85,7 @@
 
   /* Layout containers */
   .section {
-    @apply py-16 px-8;
+    @apply py-12 px-8;
   }
 
   .container-max {
@@ -124,5 +124,168 @@
   /* Ensure consistent rendering */
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* Global spacing overrides to reduce excessive padding */
+@layer components {
+  /* Section component spacing - keep major section spacing */
+  section[class*="py-20"] {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  section[class*="py-16"] {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  section[class*="py-24"] {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  /* Margin reduction between sections - keep this for section separation */
+  section[class*="my-8"] {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  section[class*="my-12"] {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+  }
+
+  /* Reduce internal element spacing within sections */
+  /* TextCard component - reduce internal padding when in sections */
+  section[class*="py-16"] section[class*="py-16"],
+  section[class*="py-20"] section[class*="py-16"] {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* BulletList component - reduce internal padding when in sections */
+  section[class*="py-16"] section[class*="py-16"]:has(.grid),
+  section[class*="py-20"] section[class*="py-16"]:has(.grid) {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* MetricGrid - reduce spacing when in sections */
+  section[class*="py-16"] .grid[class*="grid-cols"],
+  section[class*="py-20"] .grid[class*="grid-cols"] {
+    gap: 1rem !important;
+  }
+
+  /* ChartSection - reduce internal spacing */
+  section[class*="py-16"] .chart-section,
+  section[class*="py-20"] .chart-section {
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* CalloutBox - reduce spacing when in sections */
+  section[class*="py-16"] .callout-box,
+  section[class*="py-20"] .callout-box {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Reduce gap between grid items within sections */
+  section[class*="py-16"] .grid[class*="gap-10"],
+  section[class*="py-20"] .grid[class*="gap-10"] {
+    gap: 1rem !important;
+  }
+
+  section[class*="py-16"] .grid[class*="gap-12"],
+  section[class*="py-20"] .grid[class*="gap-12"] {
+    gap: 1.5rem !important;
+  }
+
+  /* Reduce spacing between flex items within sections */
+  section[class*="py-16"] .flex[class*="gap-8"],
+  section[class*="py-20"] .flex[class*="gap-8"] {
+    gap: 1rem !important;
+  }
+
+  /* Reduce card padding within sections */
+  section[class*="py-16"] .card[class*="p-8"],
+  section[class*="py-20"] .card[class*="p-8"] {
+    padding: 1rem !important;
+  }
+
+  section[class*="py-16"] .card[class*="p-10"],
+  section[class*="py-20"] .card[class*="p-10"] {
+    padding: 1.5rem !important;
+  }
+
+  /* Reduce title margins within sections */
+  section[class*="py-16"] h1[class*="mb-8"],
+  section[class*="py-16"] h2[class*="mb-8"],
+  section[class*="py-16"] h3[class*="mb-8"],
+  section[class*="py-20"] h1[class*="mb-8"],
+  section[class*="py-20"] h2[class*="mb-8"],
+  section[class*="py-20"] h3[class*="mb-8"] {
+    margin-bottom: 1rem !important;
+  }
+
+  section[class*="py-16"] h1[class*="mb-16"],
+  section[class*="py-16"] h2[class*="mb-16"],
+  section[class*="py-16"] h3[class*="mb-16"],
+  section[class*="py-20"] h1[class*="mb-16"],
+  section[class*="py-20"] h2[class*="mb-16"],
+  section[class*="py-20"] h3[class*="mb-16"] {
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Reduce prose paragraph margins within sections */
+  section[class*="py-16"] .prose p[class*="mb-8"],
+  section[class*="py-20"] .prose p[class*="mb-8"] {
+    margin-bottom: 0.75rem !important;
+  }
+
+  section[class*="py-16"] .prose p[class*="mb-6"],
+  section[class*="py-20"] .prose p[class*="mb-6"] {
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Reduce list item margins within sections */
+  section[class*="py-16"] .prose li[class*="mb-6"],
+  section[class*="py-20"] .prose li[class*="mb-6"] {
+    margin-bottom: 0.5rem !important;
+  }
+
+  section[class*="py-16"] .prose li[class*="mb-4"],
+  section[class*="py-20"] .prose li[class*="mb-4"] {
+    margin-bottom: 0.25rem !important;
+  }
+
+  /* Specific component spacing reductions for elements within sections */
+  /* TextCard within sections */
+  section[class*="py-16"] > div > div > section[class*="py-16"],
+  section[class*="py-20"] > div > div > section[class*="py-16"] {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    margin-top: 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  /* BulletList within sections */
+  section[class*="py-16"] > div > div > section[class*="py-16"]:has(.grid),
+  section[class*="py-20"] > div > div > section[class*="py-16"]:has(.grid) {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    margin-top: 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  /* MetricGrid within sections */
+  section[class*="py-16"] > div > div > .grid[class*="grid-cols"],
+  section[class*="py-20"] > div > div > .grid[class*="grid-cols"] {
+    gap: 0.75rem !important;
+    margin-bottom: 1rem !important;
   }
 }

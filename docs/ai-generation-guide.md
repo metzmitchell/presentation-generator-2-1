@@ -5,6 +5,7 @@
 This guide provides comprehensive instructions for AI-powered generation of presentation pages using the NextGen Presentation Generator. The system is optimized for **single-prompt generation** - converting MDX outlines to complete, beautiful presentation pages.
 
 ### Key Design Philosophy
+- **CRITICAL: ALL TEXT MUST BE STYLED**: Every piece of text MUST be wrapped in a design component (Hero, Section, TextCard, CalloutBox, BulletList, etc.). NEVER use plain markdown text or unstyled paragraphs - this breaks the visual design system
 - **Full-screen impact**: Create sections that fill the entire screen height with bold visual hierarchy
 - **Modern typography**: Outfit font for display headings, Inter for body text  
 - **Enhanced spacing**: Generous spacing between sections (py-20) for better visual breathing room
@@ -25,6 +26,7 @@ Generate a beautiful dark-themed presentation page from this MDX outline:
 [PASTE YOUR MDX OUTLINE HERE]
 
 Requirements:
+- CRITICAL: ALL TEXT MUST BE STYLED - Wrap every piece of content in design components (Hero, Section, TextCard, CalloutBox, BulletList, etc.). NO plain markdown paragraphs or unstyled text allowed
 - Use the 11 available components: Hero, MetricGrid, ChartSection, CalloutBox, ImageGallery, Timeline, Section, TextCard, BulletList, TextHeavy, DarkSection
 - Dark theme with modern typography: Outfit display font, Inter body font
 - Enhanced spacing and visual hierarchy for full-screen sections
@@ -579,7 +581,47 @@ type: "market-research"
 
 ## AI Generation Best Practices
 
-### 1. Choose Icons Strategically
+### 1. Text Styling Rules (CRITICAL)
+
+**EVERY piece of text must be wrapped in a styled component**. The presentation system does not support plain markdown text outside of components.
+
+```mdx
+<!-- WRONG: Plain markdown text breaks the design system -->
+## Executive Summary
+**July delivered strong YTD performance with 109% of annual target achieved through 7 months**
+
+### Key Wins
+- **YTD Revenue**: $6.37M in contracts signed (109% of $5.83M target)
+- **Annual Projection**: On track for $10.9M (109% of $10M goal)
+
+<!-- CORRECT: All text properly wrapped in components -->
+<Section title="Executive Summary">
+  July delivered strong YTD performance with **109% of annual target achieved** through 7 months.
+</Section>
+
+<CalloutBox emphasis="success">
+  🎯 **Key Achievement**: $6.37M in contracts signed (109% of $5.83M target) - on track for $10.9M annual goal
+</CalloutBox>
+
+<BulletList 
+  layout="grid" 
+  columns={2}
+  items={[
+    {title: "YTD Revenue", content: "$6.37M in contracts signed (109% of $5.83M target)", doodleIcon: "finance/trend-up", emphasis: "success"},
+    {title: "Annual Projection", content: "On track for $10.9M (109% of $10M goal)", doodleIcon: "interface/target", emphasis: "highlight"}
+  ]}
+/>
+```
+
+**Text Styling Component Hierarchy**:
+1. **Hero**: Main titles and key metrics
+2. **Section**: Standard content sections with titles
+3. **TextCard**: Important insights and highlights  
+4. **CalloutBox**: Critical information and achievements
+5. **BulletList**: Structured lists and feature highlights
+6. **TextHeavy**: Full-screen statements and major announcements
+
+### 2. Choose Icons Strategically
 
 **Icon Selection Guidelines**:
 - Use **doodle icons** for business metrics, UI elements, and functional concepts
@@ -893,7 +935,12 @@ The system includes robust error handling:
 
 ### Common Issues and Solutions
 
-1. **Chart not displaying**
+1. **Unstyled text breaking design system**
+   - ALL text must be wrapped in components (Section, TextCard, CalloutBox, BulletList, etc.)
+   - NO plain markdown paragraphs or headings outside components allowed
+   - Convert plain text to appropriate styled components
+
+2. **Chart not displaying**
    - Check data format: must be `[{name: string, value: number}]`
    - Verify chart type is valid: bar, line, pie, area, scatter
 
@@ -927,6 +974,7 @@ The system includes robust error handling:
 
 Before generating a presentation, ensure:
 
+- [ ] **CRITICAL**: ALL text is wrapped in styled components (NO plain markdown text allowed)
 - [ ] Frontmatter includes title, date, and type
 - [ ] All data is inline (no external files)
 - [ ] Chart data uses `{name: string, value: number}` format

@@ -34,6 +34,7 @@ export interface MetricGridProps {
 export interface ChartData {
   name: string
   value: number
+  [key: string]: string | number // Allow additional data series
 }
 
 export interface ChartSectionProps {
@@ -43,6 +44,8 @@ export interface ChartSectionProps {
   colorScheme?: ColorScheme
   layout?: 'text-chart' | 'full-width'
   children?: React.ReactNode
+  dataKeys?: string[] // For multi-line charts, specify which keys to render
+  seriesNames?: string[] // For multi-line charts, specify series names for legend
 }
 
 // CalloutBox Component

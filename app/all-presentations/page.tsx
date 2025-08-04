@@ -36,6 +36,12 @@ const presentations = [
     title: 'July 2025 Presentation',
     description: 'Special presentation for July 2025',
     filename: 'july_2025_presentation.mdx'
+  },
+  {
+    slug: 'july-2025-marketing-presentation',
+    title: 'Scroggs Construction - July 2025 Marketing Performance Analysis',
+    description: 'Monthly marketing performance analysis and strategic insights',
+    filename: 'july-2025-marketing-presentation.mdx'
   }
 ]
 

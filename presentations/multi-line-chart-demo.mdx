@@ -1,0 +1,104 @@
+---
+title: "Multi-Line Chart Demo"
+date: "2025-08-04"
+type: "demo"
+description: "Demonstration of multi-line chart functionality"
+---
+
+<Hero 
+  title="Multi-Line Chart Demo" 
+  subtitle="Showcasing enhanced chart capabilities"
+  highlight="Enhanced"
+  highlightLabel="Functionality"
+/>
+
+## Single Line Chart (Original)
+
+<ChartSection 
+  title="Simple Line Chart - Monthly Revenue"
+  type="line"
+  data={[
+    {name: "Jan", value: 1200},
+    {name: "Feb", value: 1900},
+    {name: "Mar", value: 800},
+    {name: "Apr", value: 1600},
+    {name: "May", value: 2200},
+    {name: "Jun", value: 1800}
+  ]}
+  colorScheme="primary"
+>
+This is a standard single-line chart showing one data series.
+</ChartSection>
+
+## Multi-Line Chart (New Feature)
+
+<ChartSection 
+  title="Revenue Comparison: Actual vs Target vs Previous Year"
+  type="line"
+  data={[
+    {name: "Jan", actual: 1200, target: 1000, previous: 950},
+    {name: "Feb", actual: 1900, target: 1000, previous: 1100},
+    {name: "Mar", actual: 800, target: 1000, previous: 1200},
+    {name: "Apr", actual: 1600, target: 1000, previous: 1050},
+    {name: "May", actual: 2200, target: 1000, previous: 1300},
+    {name: "Jun", actual: 1800, target: 1000, previous: 1150}
+  ]}
+  dataKeys={["actual", "target", "previous"]}
+  seriesNames={["2025 Actual", "2025 Target", "2024 Previous"]}
+  colorScheme="primary"
+>
+This enhanced chart shows multiple data series with different colors and a legend. Perfect for comparing actual performance against targets and historical data.
+</ChartSection>
+
+## Multi-Line Area Chart
+
+<ChartSection 
+  title="Stacked Performance Areas"
+  type="area"
+  data={[
+    {name: "Q1", sales: 1500, marketing: 800, support: 600},
+    {name: "Q2", sales: 1800, marketing: 950, support: 700},
+    {name: "Q3", sales: 2200, marketing: 1100, support: 800},
+    {name: "Q4", sales: 2600, marketing: 1200, support: 900}
+  ]}
+  dataKeys={["sales", "marketing", "support"]}
+  seriesNames={["Sales", "Marketing", "Support"]}
+  colorScheme="success"
+>
+Multiple area series showing department performance over quarters with stacked visualization.
+</ChartSection>
+
+<CalloutBox emphasis="success">
+✅ **Multi-line charts now support:**
+- Multiple data series on same chart
+- Custom series names for legend
+- Automatic color assignment
+- Enhanced tooltips showing all series values
+- Works with line and area charts
+</CalloutBox>
+
+## Feature Specifications
+
+### Usage Example
+```jsx
+<ChartSection 
+  title="Your Chart Title"
+  type="line"
+  data={[
+    {name: "Jan", series1: 100, series2: 120, series3: 90},
+    {name: "Feb", series1: 150, series2: 140, series3: 110}
+  ]}
+  dataKeys={["series1", "series2", "series3"]}
+  seriesNames={["Actual", "Target", "Previous"]}
+  colorScheme="primary"
+>
+Chart description here
+</ChartSection>
+```
+
+### Key Features
+- **dataKeys**: Array of data property names to render as lines
+- **seriesNames**: Optional custom names for legend (defaults to dataKeys)
+- **Automatic Legend**: Shows when multiple series are present
+- **Color Assignment**: Uses categorical colors for multiple series
+- **Enhanced Tooltips**: Shows all series values on hover
