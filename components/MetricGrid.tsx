@@ -5,6 +5,7 @@ import { cn, formatNumber, getChangeColor, getChangeSymbol } from '@/lib/utils'
 import { validateMetricData, createMetricsFallback } from '@/lib/validation'
 import { MetricPlaceholder } from '@/components/fallbacks'
 import { ErrorBoundary } from '@/components/fallbacks'
+import { TrendIcon } from '@/components/Icon'
 
 export function MetricGrid({ metrics, columns = 3 }: MetricGridProps) {
   // Validate metrics data
@@ -79,15 +80,9 @@ export function MetricGrid({ metrics, columns = 3 }: MetricGridProps) {
                   <span className="text-sm font-medium">
                     {getChangeSymbol(metric.change)}{Math.abs(metric.change)}%
                   </span>
-                  {metric.change > 0 ? (
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                    </svg>
-                  ) : metric.change < 0 ? (
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                    </svg>
-                  ) : null}
+                  <TrendIcon 
+                    direction={metric.change > 0 ? 'up' : metric.change < 0 ? 'down' : 'neutral'}
+                  />
                 </div>
               )}
             </div>

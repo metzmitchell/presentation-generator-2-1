@@ -2,6 +2,7 @@
 
 import { HeroProps } from '@/lib/types'
 import { cn } from '@/lib/utils'
+import { SpaceIcon } from '@/components/Icon'
 
 export function Hero({ 
   title, 
@@ -14,13 +15,29 @@ export function Hero({
   
   return (
     <section className={cn(
-      'relative overflow-hidden my-12',
-      isFullWidth ? 'min-h-screen flex items-center justify-center' : 'py-24',
-      'px-8 lg:px-6 md:px-4'
+      'relative overflow-hidden',
+      isFullWidth ? [
+        'min-h-screen flex items-center justify-center px-8 lg:px-6 md:px-4',
+        // Extend to edges and handle any top spacing
+        'w-screen -mt-4 -ml-4 pl-4'
+      ] : 'py-24 my-12 px-8 lg:px-6 md:px-4'
     )}>
       {/* Background gradient effect */}
       {isFullWidth && (
-        <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/10 via-transparent to-accent-purple/10" />
+        <>
+          <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/10 via-transparent to-accent-purple/10" />
+          {/* Decorative space icons */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <SpaceIcon name="star" className="absolute top-20 left-20 opacity-20" size="lg" />
+            <SpaceIcon name="rocket" className="absolute top-32 right-32 opacity-15" size="xl" />
+            <SpaceIcon name="satellite" className="absolute bottom-40 left-16 opacity-10" size="lg" />
+            <SpaceIcon name="galaxy" className="absolute bottom-20 right-20 opacity-20" size="xl" />
+            <SpaceIcon name="stars" className="absolute top-1/2 left-10 opacity-10" size="lg" />
+            <SpaceIcon name="moon-full-moon" className="absolute top-16 right-16 opacity-15" size="lg" />
+          </div>
+          {/* Bottom fade transition */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+        </>
       )}
       
       <div className={cn(

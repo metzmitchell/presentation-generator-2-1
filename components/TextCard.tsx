@@ -3,11 +3,14 @@
 import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 import * as LucideIcons from 'lucide-react'
+import { DoodleIcon, SpaceIcon } from '@/components/Icon'
 
 interface TextCardProps {
   title?: string
   icon?: string
   lucideIcon?: keyof typeof LucideIcons
+  doodleIcon?: string
+  spaceIcon?: string
   emphasis?: 'normal' | 'highlight' | 'success' | 'warning' | 'subtle'
   layout?: 'horizontal' | 'vertical'
   variant?: 'default' | 'compact' | 'standout'
@@ -18,6 +21,8 @@ export function TextCard({
   title, 
   icon, 
   lucideIcon,
+  doodleIcon,
+  spaceIcon,
   emphasis = 'normal', 
   layout = 'vertical',
   variant = 'default',
@@ -39,8 +44,62 @@ export function TextCard({
 
   const isHorizontal = layout === 'horizontal'
   
-  // Render Lucide icon if provided
+  // Render icon based on type provided
   const renderIcon = () => {
+    // New icon system - doodle icons (preferred for small UI elements)
+    if (doodleIcon) {
+      return (
+        <div className={cn(
+          'rounded-full p-4 shrink-0',
+          emphasis === 'highlight' && 'bg-accent-blue/20',
+          emphasis === 'success' && 'bg-accent-green/20',
+          emphasis === 'warning' && 'bg-accent-orange/20',
+          emphasis === 'normal' && 'bg-surface/50',
+          emphasis === 'subtle' && 'bg-border/20'
+        )}>
+          <DoodleIcon 
+            name={doodleIcon} 
+            size="lg" 
+            className={cn(
+              emphasis === 'highlight' && 'brightness-0 saturate-100 invert(50%) sepia(98%) saturate(2618%) hue-rotate(204deg) brightness(99%) contrast(90%)',
+              emphasis === 'success' && 'brightness-0 saturate-100 invert(61%) sepia(90%) saturate(2618%) hue-rotate(88deg) brightness(99%) contrast(90%)',
+              emphasis === 'warning' && 'brightness-0 saturate-100 invert(74%) sepia(85%) saturate(2618%) hue-rotate(12deg) brightness(99%) contrast(90%)',
+              emphasis === 'normal' && 'brightness-0 saturate-100 invert(100%)',
+              emphasis === 'subtle' && 'brightness-0 saturate-100 invert(60%)'
+            )}
+          />
+        </div>
+      )
+    }
+
+    // New icon system - space icons (preferred for larger thematic elements)
+    if (spaceIcon) {
+      return (
+        <div className={cn(
+          'rounded-full p-4 shrink-0',
+          emphasis === 'highlight' && 'bg-accent-blue/20',
+          emphasis === 'success' && 'bg-accent-green/20',
+          emphasis === 'warning' && 'bg-accent-orange/20',
+          emphasis === 'normal' && 'bg-surface/50',
+          emphasis === 'subtle' && 'bg-border/20'
+        )}>
+          <SpaceIcon 
+            name={spaceIcon} 
+            size="lg" 
+            variant="filled"
+            className={cn(
+              emphasis === 'highlight' && 'brightness-0 saturate-100 invert(50%) sepia(98%) saturate(2618%) hue-rotate(204deg) brightness(99%) contrast(90%)',
+              emphasis === 'success' && 'brightness-0 saturate-100 invert(61%) sepia(90%) saturate(2618%) hue-rotate(88deg) brightness(99%) contrast(90%)',
+              emphasis === 'warning' && 'brightness-0 saturate-100 invert(74%) sepia(85%) saturate(2618%) hue-rotate(12deg) brightness(99%) contrast(90%)',
+              emphasis === 'normal' && 'brightness-0 saturate-100 invert(100%)',
+              emphasis === 'subtle' && 'brightness-0 saturate-100 invert(60%)'
+            )}
+          />
+        </div>
+      )
+    }
+
+    // Legacy Lucide icon support
     if (lucideIcon && LucideIcons[lucideIcon]) {
       const IconComponent = LucideIcons[lucideIcon] as React.ComponentType<{ className?: string }>
       return (
@@ -64,6 +123,7 @@ export function TextCard({
       )
     }
     
+    // Legacy emoji icon support
     if (icon) {
       return (
         <div className={cn(
@@ -85,46 +145,50 @@ export function TextCard({
   }
 
   return (
-    <div className={cn(
-      'animate-fade-in transition-all duration-300 my-12',
-      emphasisClasses[emphasis],
-      variantClasses[variant],
-      isHorizontal ? 'flex items-start gap-8' : 'flex flex-col'
-    )}>
-      {/* Icon and Title Section */}
-      <div className={cn(
-        isHorizontal ? 'flex items-start gap-8 flex-1' : 'flex flex-col items-center text-center gap-6 mb-8'
-      )}>
-        {renderIcon()}
-        
+    <section className="px-8 lg:px-6 md:px-4 py-16 my-12">
+      <div className="max-w-6xl mx-auto">
         <div className={cn(
-          isHorizontal ? 'flex-1' : 'w-full'
+          'animate-fade-in transition-all duration-300',
+          emphasisClasses[emphasis],
+          variantClasses[variant],
+          isHorizontal ? 'flex items-start gap-8' : 'flex flex-col'
         )}>
-          {title && (
-            <h3 className={cn(
-              'font-display font-bold text-white mb-6',
-              variant === 'standout' ? 'text-3xl' : 'text-2xl',
-              isHorizontal ? 'text-left' : 'text-center'
-            )}>
-              {title}
-            </h3>
-          )}
-          
+          {/* Icon and Title Section */}
           <div className={cn(
-            'prose prose-invert max-w-none',
-            variant === 'standout' ? 'prose-lg' : 'prose-base',
-            'prose-p:text-inherit prose-p:mb-4 prose-p:leading-relaxed',
-            'prose-ul:list-none prose-ul:ml-0 prose-li:text-inherit prose-li:mb-3',
-            'prose-li:flex prose-li:items-start prose-li:gap-3',
-            'prose-li:before:content-["→"] prose-li:before:text-accent-blue prose-li:before:font-bold prose-li:before:shrink-0',
-            'prose-strong:text-white prose-strong:font-bold prose-strong:bg-accent-blue/20 prose-strong:px-2 prose-strong:py-1 prose-strong:rounded-md prose-strong:not-italic',
-            'prose-em:text-accent-blue prose-em:not-italic prose-em:font-medium',
-            isHorizontal ? 'text-left' : 'text-center'
+            isHorizontal ? 'flex items-start gap-8 flex-1' : 'flex flex-col items-center text-center gap-6 mb-8'
           )}>
-            {children}
+            {renderIcon()}
+            
+            <div className={cn(
+              isHorizontal ? 'flex-1' : 'w-full'
+            )}>
+              {title && (
+                <h3 className={cn(
+                  'font-display font-bold text-white mb-6',
+                  variant === 'standout' ? 'text-3xl' : 'text-2xl',
+                  isHorizontal ? 'text-left' : 'text-center'
+                )}>
+                  {title}
+                </h3>
+              )}
+              
+              <div className={cn(
+                'prose prose-invert max-w-none',
+                variant === 'standout' ? 'prose-lg' : 'prose-base',
+                'prose-p:text-inherit prose-p:mb-4 prose-p:leading-relaxed',
+                'prose-ul:list-none prose-ul:ml-0 prose-li:text-inherit prose-li:mb-3',
+                'prose-li:flex prose-li:items-start prose-li:gap-3',
+                'prose-li:before:content-["→"] prose-li:before:text-accent-blue prose-li:before:font-bold prose-li:before:shrink-0',
+                'prose-strong:text-white prose-strong:font-bold prose-strong:bg-accent-blue/20 prose-strong:px-2 prose-strong:py-1 prose-strong:rounded-md prose-strong:not-italic',
+                'prose-em:text-accent-blue prose-em:not-italic prose-em:font-medium',
+                isHorizontal ? 'text-left' : 'text-center'
+              )}>
+                {children}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

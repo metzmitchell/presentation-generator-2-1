@@ -3,12 +3,15 @@
 import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 import * as LucideIcons from 'lucide-react'
+import { DoodleIcon, SpaceIcon } from '@/components/Icon'
 
 interface TextHeavyItem {
   title: string
   subtitle?: string
   icon?: string
   lucideIcon?: keyof typeof LucideIcons
+  doodleIcon?: string
+  spaceIcon?: string
   emphasis?: 'primary' | 'secondary' | 'accent'
 }
 
@@ -36,11 +39,40 @@ export function TextHeavy({
   }
 
   const renderIcon = (item: TextHeavyItem) => {
+    // New icon system - doodle icons (preferred for small UI elements)
+    if (item.doodleIcon) {
+      return (
+        <div className="mb-4 text-center">
+          <DoodleIcon 
+            name={item.doodleIcon} 
+            size="xl" 
+            className="brightness-0 saturate-100 invert(50%) sepia(98%) saturate(2618%) hue-rotate(204deg) brightness(99%) contrast(90%)"
+          />
+        </div>
+      )
+    }
+
+    // New icon system - space icons (preferred for thematic elements - extra large for visual impact)
+    if (item.spaceIcon) {
+      return (
+        <div className="mb-6 text-center">
+          <SpaceIcon 
+            name={item.spaceIcon} 
+            size="2xl" 
+            variant="filled"
+            className="brightness-0 saturate-100 invert(50%) sepia(98%) saturate(2618%) hue-rotate(204deg) brightness(99%) contrast(90%)"
+          />
+        </div>
+      )
+    }
+    
+    // Legacy Lucide icon support
     if (item.lucideIcon && LucideIcons[item.lucideIcon]) {
       const IconComponent = LucideIcons[item.lucideIcon] as React.ComponentType<{ className?: string }>
       return <IconComponent className="h-16 w-16 mb-4 mx-auto text-accent-blue" />
     }
     
+    // Legacy emoji icon support
     if (item.icon) {
       return (
         <div className="text-6xl mb-4 text-center">

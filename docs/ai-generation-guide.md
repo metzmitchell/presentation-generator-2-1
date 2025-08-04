@@ -9,7 +9,7 @@ This guide provides comprehensive instructions for AI-powered generation of pres
 - **Modern typography**: Outfit font for display headings, Inter for body text  
 - **Enhanced spacing**: Generous spacing between sections (py-20) for better visual breathing room
 - **No full-width layouts**: All content constrained to max-w-6xl for optimal readability
-- **Smart icons**: Lucide React icons integrated with emoji fallbacks
+- **Rich icon system**: Two comprehensive icon libraries (doodle + space icons) for enhanced visual appeal
 - **Number highlighting**: Bold styling for key metrics and data points
 - **Textured backgrounds**: Moving gradients and subtle animations for visual interest
 
@@ -28,7 +28,7 @@ Requirements:
 - Use the 11 available components: Hero, MetricGrid, ChartSection, CalloutBox, ImageGallery, Timeline, Section, TextCard, BulletList, TextHeavy, DarkSection
 - Dark theme with modern typography: Outfit display font, Inter body font
 - Enhanced spacing and visual hierarchy for full-screen sections
-- Lucide React icons preferred (lucideIcon prop), emoji fallback supported
+- New icon system: doodleIcon prop for UI elements, spaceIcon prop for thematic elements
 - Number highlighting with **bold** markdown for key metrics
 - Textured backgrounds and moving gradients for visual interest
 - All data must be inline (no external files)
@@ -64,6 +64,51 @@ description: "Brief description"
 
 <!-- Additional components... -->
 ```
+
+## Icon System
+
+The presentation generator now features a comprehensive dual-icon system designed for professional presentations:
+
+### Doodle Icons (doodleIcon prop)
+**Best for**: Small UI elements, interface controls, metrics indicators, bullet points
+- **Style**: Clean, minimal line-drawn icons optimized for dark themes
+- **Categories**: arrows, interface, currency, finance, e-commerce, files, health, logos, emojis, misc
+- **Usage**: `doodleIcon="interface/analytics"`, `doodleIcon="arrows/arrow-up"`, `doodleIcon="finance/trend-up"`
+
+### Space Icons (spaceIcon prop)  
+**Best for**: Large decorative elements, thematic backgrounds, hero sections, TextHeavy sections, major visual elements
+- **Style**: Space/sci-fi themed icons with multiple variants (outline, filled, sticker)
+- **Categories**: planets, rockets, satellites, astronauts, space ships, stars, galaxies, aliens
+- **Usage**: `spaceIcon="rocket"`, `spaceIcon="galaxy"`, `spaceIcon="earth"`
+- **Size**: Automatically rendered extra-large (96px) in TextHeavy sections for maximum visual impact
+
+### Icon Prop Priority
+When multiple icon props are provided, the system uses this priority:
+1. `doodleIcon` (preferred for UI elements)
+2. `spaceIcon` (preferred for thematic elements)  
+3. `lucideIcon` (legacy support)
+4. `icon` (legacy emoji support)
+
+### Most Useful Icons
+
+**Doodle Icons for Business Presentations**:
+- `interface/analytics` - Data analysis sections
+- `interface/target` - Goals and objectives
+- `interface/trophy` - Achievements and results
+- `interface/bulb` - Ideas and innovation
+- `finance/trend-up`, `finance/trend-down` - Performance metrics
+- `arrows/arrow-up`, `arrows/arrow-down` - Directional emphasis
+- `interface/tick` - Completed items
+- `interface/star` - Quality, ratings, excellence
+
+**Space Icons for Tech/Innovation Themes**:
+- `rocket` - Growth, launches, innovation
+- `satellite` - Communication, connectivity
+- `earth` - Global themes, worldwide reach
+- `galaxy` - Big picture, scale, vision
+- `star`, `stars` - Excellence, achievement
+- `astronaut` - Exploration, pioneers
+- `telescope` - Future vision, analysis
 
 ## Component Library Reference
 
@@ -214,19 +259,29 @@ description: "Brief description"
 ```mdx
 <TextCard 
   title="Key Feature"               // Optional: Card title
-  icon="🚀"                        // Optional: Emoji icon (fallback)
-  lucideIcon="Rocket"              // Optional: Lucide React icon (preferred)
+  doodleIcon="interface/bulb"       // Optional: Doodle icon (preferred for UI elements)
+  spaceIcon="rocket"                // Optional: Space icon (preferred for thematic elements)
   emphasis="highlight"              // Optional: normal | highlight | success | warning | subtle
   layout="horizontal"               // Optional: horizontal | vertical
   variant="standout"                // Optional: default | compact | standout
 >
   This feature delivers exceptional value through **automated workflows** and intelligent insights.
 </TextCard>
+
+// Legacy support (still works but not recommended)
+<TextCard 
+  title="Legacy Example"
+  icon="🚀"                        // Emoji fallback
+  lucideIcon="Rocket"              // Legacy Lucide icon
+>
+  Legacy icon support maintained for backwards compatibility.
+</TextCard>
 ```
 
 **New Features**:
+- **Rich Icon System**: Dual icon libraries with `doodleIcon` and `spaceIcon` props
 - **Large Icons**: 64px icons in circular backgrounds with theme colors
-- **Lucide Integration**: Modern, consistent icons with `lucideIcon` prop
+- **Smart Icon Selection**: Automatic color theming based on emphasis
 - **Variant Options**: `default`, `compact`, `standout` (with hover effects)
 - **Enhanced Typography**: Outfit display font for titles
 - **Number Highlighting**: Bold styling automatically applied to **markdown bold** text
@@ -255,15 +310,15 @@ description: "Brief description"
   variant="enhanced"                // Optional: default | enhanced
   items={[
     {
-      lucideIcon: "TrendingUp",     // Optional: Lucide React icon (preferred)
-      icon: "📈",                   // Optional: Emoji fallback
+      doodleIcon: "finance/trend-up", // Optional: Doodle icon (preferred for UI elements)
+      spaceIcon: "rocket",            // Optional: Space icon (preferred for thematic elements)
       title: "Growth Analytics",
       content: "Track performance with **real-time metrics** and insights",
       emphasis: "success",
-      number: "1"                   // Optional: Custom number/label
+      number: "1"                     // Optional: Custom number/label
     },
     {
-      lucideIcon: "Target",
+      doodleIcon: "interface/target",
       title: "Targeted Campaigns", 
       content: "Create focused marketing campaigns that **convert**",
       emphasis: "highlight"
@@ -273,9 +328,10 @@ description: "Brief description"
 ```
 
 **New Features**:
+- **Rich Icon System**: Support for `doodleIcon` and `spaceIcon` props with automatic theming
 - **Card Layout**: `cards` layout with hover effects and enhanced styling
 - **Numbered Lists**: `numbered={true}` for automatic numbering with highlighted badges
-- **Lucide Icons**: Modern icons with `lucideIcon` prop, emoji fallback
+- **Smart Icon Selection**: Automatic color matching based on emphasis settings
 - **Enhanced Variant**: Larger text, better spacing with `variant="enhanced"`
 - **Number Highlighting**: Custom numbers with `number` prop or auto-numbering
 
@@ -286,8 +342,10 @@ description: "Brief description"
 - `cards`: Card-based layout with backgrounds and hover effects
 
 **Item Structure**:
-- `lucideIcon`: string (optional) - Lucide React icon name (preferred)
-- `icon`: string (optional) - Emoji or icon character (fallback)
+- `doodleIcon`: string (optional) - Doodle icon name (preferred for UI elements) e.g. "interface/trophy"
+- `spaceIcon`: string (optional) - Space icon name (preferred for thematic elements) e.g. "rocket"
+- `lucideIcon`: string (optional) - Legacy Lucide React icon name (backwards compatibility)
+- `icon`: string (optional) - Legacy emoji or icon character (fallback)
 - `title`: string (optional) - Item title/headline
 - `content`: ReactNode (required) - Main content with **bold** highlighting
 - `emphasis`: string (optional) - Color emphasis (normal | highlight | success | warning)
@@ -308,13 +366,13 @@ description: "Brief description"
     {
       title: "Industry Growth",
       subtitle: "Leading market expansion initiatives",
-      lucideIcon: "TrendingUp",
+      spaceIcon: "satellite",          // Space icons preferred for TextHeavy sections (extra-large visual impact)
       emphasis: "primary"
     },
     {
       title: "Innovation Focus", 
       subtitle: "Next-generation product development",
-      lucideIcon: "Lightbulb",
+      spaceIcon: "rocket",             // Space icons automatically rendered at 96px in TextHeavy
       emphasis: "accent"
     }
   ]}
@@ -327,6 +385,7 @@ Key initiatives driving our success forward with measurable impact.
 
 **Features**:
 - **Full-Screen Impact**: min-h-screen sections with dramatic typography
+- **Extra-Large Space Icons**: Space icons automatically rendered at 96px (2xl) for maximum visual impact
 - **Textured Backgrounds**: Moving gradients and animated overlays
 - **Large Typography**: 6xl-8xl headlines with Outfit display font
 - **Structured Items**: Grid layout for key points with icons and emphasis
@@ -520,7 +579,37 @@ type: "market-research"
 
 ## AI Generation Best Practices
 
-### 1. Be Specific with Data
+### 1. Choose Icons Strategically
+
+**Icon Selection Guidelines**:
+- Use **doodle icons** for business metrics, UI elements, and functional concepts
+- Use **space icons** for innovation, technology, growth, and visionary themes
+- **TextHeavy sections**: Always use space icons - they're automatically rendered extra-large (96px) for maximum visual impact
+- Match icon category to content theme for visual coherence
+
+```mdx
+<!-- GOOD: Appropriate icon selection -->
+<TextCard title="Revenue Growth" doodleIcon="finance/trend-up" emphasis="success">
+  Business metrics with business-focused icons
+</TextCard>
+
+<TextCard title="Innovation Strategy" spaceIcon="rocket" emphasis="highlight">
+  Innovation themes with space/tech icons
+</TextCard>
+
+<BulletList items={[
+  {doodleIcon: "interface/analytics", title: "Data Analysis", content: "Business intelligence"},
+  {spaceIcon: "satellite", title: "Global Reach", content: "Worldwide expansion"},
+  {doodleIcon: "interface/trophy", title: "Achievement", content: "Goal completion"}
+]} />
+
+<!-- AVOID: Mixed metaphors -->
+<TextCard title="Financial Results" spaceIcon="alien-1" emphasis="success">
+  Don't use space aliens for financial data
+</TextCard>
+```
+
+### 2. Be Specific with Data
 
 ```mdx
 <!-- GOOD: Specific metrics with context -->
@@ -564,26 +653,49 @@ type: "market-research"
 ]} />
 ```
 
-### 3. Use Visual Emphasis Strategically
+### 3. Use Visual Emphasis Strategically with New Icon System
 
 ```mdx
-<!-- Highlight major achievements -->
+<!-- Highlight major achievements with doodle icons -->
 <CalloutBox emphasis="success">
   🎯 **Major Win**: Closed largest deal in company history
 </CalloutBox>
 
-<!-- Use TextCard for key insights -->
-<TextCard title="Key Insight" icon="💡" emphasis="highlight">
+<!-- Use TextCard with doodle icons for key insights -->
+<TextCard title="Key Insight" doodleIcon="interface/bulb" emphasis="highlight">
   73% of users prefer the new interface design
 </TextCard>
 
-<!-- Use BulletList for structured information -->
+<!-- Use space icons for innovation/tech themes -->
+<TextCard title="Product Launch" spaceIcon="rocket" emphasis="success">
+  Successfully launched our next-generation platform
+</TextCard>
+
+<!-- TextHeavy sections: Always use space icons for maximum visual impact -->
+<TextHeavy title="Strategic Vision" items={[
+  {title: "Innovation", subtitle: "Leading technology advancement", spaceIcon: "rocket"},
+  {title: "Global Reach", subtitle: "Worldwide market expansion", spaceIcon: "satellite"},
+  {title: "Future Vision", subtitle: "Long-term strategic planning", spaceIcon: "telescope"}
+]} />
+
+<!-- Use BulletList with appropriate icon selection -->
 <BulletList 
   layout="grid"
   columns={2}
   items={[
-    {icon: "✅", title: "Completed", content: "Phase 1 implementation", emphasis: "success"},
-    {icon: "🔄", title: "In Progress", content: "Phase 2 rollout", emphasis: "highlight"}
+    {doodleIcon: "interface/tick", title: "Completed", content: "Phase 1 implementation", emphasis: "success"},
+    {doodleIcon: "interface/clock", title: "In Progress", content: "Phase 2 rollout", emphasis: "highlight"}
+  ]}
+/>
+
+<!-- Mix doodle and space icons based on content -->
+<BulletList 
+  layout="cards"
+  columns={3}
+  items={[
+    {doodleIcon: "finance/trend-up", title: "Revenue", content: "34% growth", emphasis: "success"},
+    {spaceIcon: "satellite", title: "Connectivity", content: "Global expansion", emphasis: "highlight"},
+    {doodleIcon: "interface/target", title: "Goals", content: "All targets met", emphasis: "success"}
   ]}
 />
 

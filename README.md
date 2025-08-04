@@ -10,6 +10,7 @@ A beautiful, dark-themed visual presentation generator for creating professional
 - **TypeScript**: Full type safety for all components and props
 - **Responsive Design**: Desktop-first approach that adapts to all screen sizes
 - **Single-Prompt Generation**: AI-friendly architecture for generating complete presentations
+- **Rich Icon System**: Two comprehensive icon libraries for enhanced visual appeal
 
 ## Components
 
@@ -82,6 +83,74 @@ type: "business-presentation"
   Revenue accelerated throughout Q4, driven by strong customer acquisition.
 </ChartSection>
 ```
+
+## Icon System
+
+The presentation generator includes two comprehensive icon libraries optimized for dark theme presentations:
+
+### Doodle Icons
+- **Best for**: Small UI elements, interface controls, metrics indicators
+- **Categories**: arrows, interface, currency, finance, e-commerce, files, health, logos, etc.
+- **Style**: Clean, minimal line-drawn icons
+- **Usage**: Automatically white-themed for dark backgrounds
+
+### Space Icons  
+- **Best for**: Large decorative elements, thematic backgrounds, hero sections
+- **Categories**: planets, rockets, satellites, astronauts, space ships, stars, galaxies
+- **Variants**: regular (outline), filled, sticker styles
+- **Usage**: Perfect for tech/innovation themed presentations
+
+### Using Icons in MDX
+
+```tsx
+// Import icon components
+import { DoodleIcon, SpaceIcon, TrendIcon } from '@/components'
+
+// Doodle icons for UI elements
+<DoodleIcon name="interface/analytics" size="md" />
+<DoodleIcon name="finance/trend-up" size="sm" />
+
+// Space icons for visual impact  
+<SpaceIcon name="rocket" size="xl" variant="filled" />
+<SpaceIcon name="galaxy" size="lg" variant="sticker" />
+
+// Trend icons for metrics (automatic direction)
+<TrendIcon direction="up" />
+```
+
+### Icon Component Props
+
+```tsx
+interface IconProps {
+  name: string                    // Icon filename without extension
+  category?: 'doodle' | 'space'   // Icon library
+  size?: 'sm' | 'md' | 'lg' | 'xl' // Size preset
+  variant?: 'regular' | 'filled' | 'outline' | 'sticker' // Space icon style
+  className?: string              // Additional CSS classes
+}
+```
+
+### Available Icon Categories
+
+**Doodle Icons**:
+- `arrows/` - Directional indicators, navigation
+- `interface/` - UI controls, actions, status
+- `finance/` - Money, trends, banking
+- `currency/` - International currency symbols  
+- `e-commerce/` - Shopping, retail, commerce
+- `files/` - Document types, file management
+- `health/` - Medical, wellness, healthcare
+- `logos/` - Brand icons, social media
+- `emojis/` - Emotional expressions
+- `misc/` - Transportation, objects, etc.
+
+**Space Icons** (extra-large in TextHeavy sections):
+- Planets: earth, mars, jupiter, saturn, etc.
+- Spacecraft: rocket, space-shuttle, satellite
+- Celestial: star, galaxy, moon phases, sun
+- Characters: astronaut, alien variants
+- Sci-fi: millennium-falcon, death-star, etc.
+- **Size**: Automatically rendered at 96px in TextHeavy sections for maximum visual impact
 
 ## Build
 

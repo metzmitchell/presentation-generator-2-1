@@ -3,11 +3,14 @@
 import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 import * as LucideIcons from 'lucide-react'
+import { DoodleIcon, SpaceIcon } from '@/components/Icon'
 
 interface BulletListProps {
   items: Array<{
     icon?: string
     lucideIcon?: keyof typeof LucideIcons
+    doodleIcon?: string
+    spaceIcon?: string
     title?: string
     content: ReactNode
     emphasis?: 'normal' | 'highlight' | 'success' | 'warning'
@@ -66,7 +69,56 @@ export function BulletList({
       )
     }
 
-    // Lucide icon
+    // New icon system - doodle icons (preferred for small UI elements)
+    if (item.doodleIcon) {
+      return (
+        <div className={cn(
+          'flex items-center justify-center w-12 h-12 rounded-xl shrink-0',
+          item.emphasis === 'highlight' && 'bg-accent-blue/20',
+          item.emphasis === 'success' && 'bg-accent-green/20',
+          item.emphasis === 'warning' && 'bg-accent-orange/20',
+          (item.emphasis === 'normal' || !item.emphasis) && 'bg-surface/50'
+        )}>
+          <DoodleIcon 
+            name={item.doodleIcon} 
+            size="md" 
+            className={cn(
+              item.emphasis === 'highlight' && 'brightness-0 saturate-100 invert(50%) sepia(98%) saturate(2618%) hue-rotate(204deg) brightness(99%) contrast(90%)',
+              item.emphasis === 'success' && 'brightness-0 saturate-100 invert(61%) sepia(90%) saturate(2618%) hue-rotate(88deg) brightness(99%) contrast(90%)',
+              item.emphasis === 'warning' && 'brightness-0 saturate-100 invert(74%) sepia(85%) saturate(2618%) hue-rotate(12deg) brightness(99%) contrast(90%)',
+              (item.emphasis === 'normal' || !item.emphasis) && 'brightness-0 saturate-100 invert(100%)'
+            )}
+          />
+        </div>
+      )
+    }
+
+    // New icon system - space icons (for thematic elements)
+    if (item.spaceIcon) {
+      return (
+        <div className={cn(
+          'flex items-center justify-center w-12 h-12 rounded-xl shrink-0',
+          item.emphasis === 'highlight' && 'bg-accent-blue/20',
+          item.emphasis === 'success' && 'bg-accent-green/20',
+          item.emphasis === 'warning' && 'bg-accent-orange/20',
+          (item.emphasis === 'normal' || !item.emphasis) && 'bg-surface/50'
+        )}>
+          <SpaceIcon 
+            name={item.spaceIcon} 
+            size="md" 
+            variant="filled"
+            className={cn(
+              item.emphasis === 'highlight' && 'brightness-0 saturate-100 invert(50%) sepia(98%) saturate(2618%) hue-rotate(204deg) brightness(99%) contrast(90%)',
+              item.emphasis === 'success' && 'brightness-0 saturate-100 invert(61%) sepia(90%) saturate(2618%) hue-rotate(88deg) brightness(99%) contrast(90%)',
+              item.emphasis === 'warning' && 'brightness-0 saturate-100 invert(74%) sepia(85%) saturate(2618%) hue-rotate(12deg) brightness(99%) contrast(90%)',
+              (item.emphasis === 'normal' || !item.emphasis) && 'brightness-0 saturate-100 invert(100%)'
+            )}
+          />
+        </div>
+      )
+    }
+
+    // Legacy Lucide icon support
     if (item.lucideIcon && LucideIcons[item.lucideIcon]) {
       const IconComponent = LucideIcons[item.lucideIcon] as React.ComponentType<{ className?: string }>
       return (
@@ -82,7 +134,7 @@ export function BulletList({
       )
     }
 
-    // Emoji icon
+    // Legacy emoji icon support
     if (item.icon) {
       return (
         <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-surface/50 shrink-0">
@@ -106,8 +158,10 @@ export function BulletList({
   }
 
   return (
-    <div className={containerClasses}>
-      {items.map((item, index) => (
+    <section className="px-8 lg:px-6 md:px-4 py-16 my-12">
+      <div className="max-w-6xl mx-auto">
+        <div className={containerClasses}>
+          {items.map((item, index) => (
         <div 
           key={index}
           className={cn(
@@ -157,7 +211,9 @@ export function BulletList({
             </div>
           </div>
         </div>
-      ))}
-    </div>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
