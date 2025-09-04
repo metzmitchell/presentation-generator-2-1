@@ -42,6 +42,12 @@ const presentations = [
     title: 'Scroggs Construction - July 2025 Marketing Performance Analysis',
     description: 'Monthly marketing performance analysis and strategic insights',
     filename: 'july-2025-marketing-presentation.mdx'
+  },
+  {
+    slug: 'kpi-mindset-presentation',
+    title: 'The KPI Mindset: From Data to Decisions',
+    description: 'How construction companies can transform their sales and marketing through proper metrics and mindset',
+    filename: 'kpi-mindset-presentation.mdx'
   }
 ]
 

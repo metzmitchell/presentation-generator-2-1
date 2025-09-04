@@ -65,6 +65,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
+// Create a dynamic import map for all presentations
+const presentationImports: Record<string, () => Promise<any>> = {
+  'example-presentation': () => import('@/presentations/example-presentation.mdx'),
+  'business-results': () => import('@/presentations/business-results.mdx'),
+  'market-analysis': () => import('@/presentations/market-analysis.mdx'),
+  'quarterly-review': () => import('@/presentations/quarterly-review.mdx'),
+  'product-demo': () => import('@/presentations/product-demo.mdx'),
+  'multi-line-chart-demo': () => import('@/presentations/multi-line-chart-demo.mdx'),
+  'july-2025-marketing-performance-presentation': () => import('@/presentations/july-2025-marketing-performance-presentation.mdx'),
+  'kpi-mindset-presentation': () => import('@/presentations/kpi-mindset-presentation.mdx'),
+  'august-2025-marketing-performance-presentation': () => import('@/presentations/august-2025-marketing-performance-presentation.mdx'),
+}
+
 export default async function PresentationPage({ params }: PageProps) {
   const { slug } = params
   
@@ -75,12 +88,17 @@ export default async function PresentationPage({ params }: PageProps) {
     return <PresentationError slug={slug} error={result.error} />
   }
 
+  // Check if we have a dynamic import for this presentation
+  const importFn = presentationImports[slug]
+  
+  if (!importFn) {
+    return <PresentationError slug={slug} error={`No import found for presentation: ${slug}`} />
+  }
+
   try {
-    // Dynamically import the MDX component directly
+    // Use the specific import function
     const MDXContent = dynamic(
-      () => import(`@/presentations/${slug}.mdx`).catch(() => {
-        throw new Error(`Failed to load presentation: ${slug}.mdx`)
-      }),
+      importFn,
       {
         loading: () => <PresentationLoading />,
         ssr: true
