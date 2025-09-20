@@ -8,6 +8,12 @@ const presentations = [
     filename: 'example-presentation.mdx'
   },
   {
+    slug: 'marketing-direction-for-builders',
+    title: 'Marketing Direction for Builders',
+    description: 'Homepage-style presentation with hero and visual sections',
+    filename: 'marketing-direction-for-builders.mdx'
+  },
+  {
     slug: 'business-results',
     title: 'Business Results',
     description: 'Presentation showcasing business performance and outcomes',
@@ -48,6 +54,12 @@ const presentations = [
     title: 'The KPI Mindset: From Data to Decisions',
     description: 'How construction companies can transform their sales and marketing through proper metrics and mindset',
     filename: 'kpi-mindset-presentation.mdx'
+  },
+  {
+    slug: 'babrm-helene-impact',
+    title: 'BABRM Hurricane Helene Impact Report',
+    description: 'Comprehensive analysis of Hurricane Helene impact on Western North Carolina building industry',
+    filename: 'babrm-helene-impact.mdx'
   }
 ]
 

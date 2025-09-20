@@ -76,6 +76,8 @@ const presentationImports: Record<string, () => Promise<any>> = {
   'july-2025-marketing-performance-presentation': () => import('@/presentations/july-2025-marketing-performance-presentation.mdx'),
   'kpi-mindset-presentation': () => import('@/presentations/kpi-mindset-presentation.mdx'),
   'august-2025-marketing-performance-presentation': () => import('@/presentations/august-2025-marketing-performance-presentation.mdx'),
+  'marketing-direction-for-builders': () => import('@/presentations/marketing-direction-for-builders.mdx'),
+  'babrm-helene-impact': () => import('@/presentations/babrm-helene-impact.mdx'),
 }
 
 export default async function PresentationPage({ params }: PageProps) {
