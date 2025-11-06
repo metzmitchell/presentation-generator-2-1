@@ -13,58 +13,6 @@ description: "Comprehensive analysis of Hurricane Helene's impact on Western Nor
   layout="full-width"
 />
 
-<Section title="Resources" layout="centered" emphasis="normal">
-  <div className="space-y-12">
-    {/* Video Resources */}
-    <div className="space-y-8">
-      <div>
-        <h3 className="text-2xl font-semibold text-primary mb-3">Video Brief</h3>
-        <p className="text-secondary mb-4 text-lg">A concise overview of the Hurricane Helene impact assessment findings.</p>
-        <YouTubeEmbed 
-          videoId="RM0a2V_vz2c"
-          title="Video Brief - Hurricane Helene Impact Assessment"
-        />
-      </div>
-      
-      <div>
-        <h3 className="text-2xl font-semibold text-primary mb-3">Podcast Overview</h3>
-        <p className="text-secondary mb-4 text-lg">A deeper dive into the survey results and analysis to prepare for the meeting.</p>
-        <YouTubeEmbed 
-          videoId="iBOxDC9s9jw"
-          title="Podcast Overview - Hurricane Helene Impact Assessment"
-        />
-      </div>
-    </div>
-
-    {/* Document Links */}
-    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-      <a
-        href="https://docs.google.com/document/d/1As8Ik2RiBCgrEuqkb8njpdKxc8mpmAYjflUqMyIkF00/edit?usp=sharing"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-3 bg-accent-blue hover:bg-blue-600 text-white font-medium px-8 py-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-accent-blue/20 hover:scale-105"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-        View Briefing Document
-      </a>
-      
-      <a
-        href="https://docs.google.com/spreadsheets/d/1VMsrxyXM3HbmR8PveDTxqWXca2GXJt7ScoJJuVy2TEY/edit?usp=sharing"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-3 bg-accent-green hover:bg-green-600 text-white font-medium px-8 py-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-accent-green/20 hover:scale-105"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-        View Survey Results
-      </a>
-    </div>
-  </div>
-</Section>
-
 <MetricGrid
   metrics={[
     {label: "BABRM Members", value: 53, unit: "", change: 80},
@@ -73,6 +21,60 @@ description: "Comprehensive analysis of Hurricane Helene's impact on Western Nor
     {label: "Physical Damage", value: 56, unit: "", change: 85}
   ]}
   columns={4}
+/>
+
+<TextCard
+  title="Video Resources"
+  spaceIcon="rocket"
+  emphasis="primary"
+  layout="vertical"
+>
+  **Video Brief Overview** - Get a quick, comprehensive overview of the Hurricane Helene impact assessment and key findings from our survey.
+  
+  <iframe 
+    width="100%" 
+    height="315" 
+    src="https://www.youtube.com/embed/RM0a2V_vz2c?si=6TDuJ-JPk07_aHmu" 
+    title="BABRM Hurricane Helene Impact Video Brief" 
+    frameBorder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    referrerPolicy="strict-origin-when-cross-origin" 
+    allowFullScreen
+    style={{marginTop: "1rem", marginBottom: "1rem", borderRadius: "8px"}}
+  />
+  
+  **In-Depth Podcast Discussion** - Join us for a deeper dive into the survey results, recovery efforts, and strategic planning for the upcoming meeting.
+  
+  <iframe 
+    width="100%" 
+    height="315" 
+    src="https://www.youtube.com/embed/iBOxDC9s9jw?si=_IHrd_umoaTtZ56Q" 
+    title="BABRM Hurricane Helene Impact Podcast" 
+    frameBorder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    referrerPolicy="strict-origin-when-cross-origin" 
+    allowFullScreen
+    style={{marginTop: "1rem", borderRadius: "8px"}}
+  />
+</TextCard>
+
+<BulletList
+  layout="grid"
+  columns={2}
+  items={[
+    {
+      title: "📄 Meeting Briefing Document",
+      content: "Access the comprehensive briefing document with detailed analysis and discussion points for the upcoming meeting. [Open Google Doc →](https://docs.google.com/document/d/1As8Ik2RiBCgrEuqkb8njpdKxc8mpmAYjflUqMyIkF00/edit?usp=sharing)",
+      spaceIcon: "earth",
+      emphasis: "highlight"
+    },
+    {
+      title: "📊 Survey Results Data",
+      content: "Explore the complete survey results spreadsheet with raw data, detailed responses, and additional analysis. [Open Spreadsheet →](https://docs.google.com/spreadsheets/d/1VMsrxyXM3HbmR8PveDTxqWXca2GXJt7ScoJJuVy2TEY/edit?usp=sharing)",
+      spaceIcon: "satellite",
+      emphasis: "highlight"
+    }
+  ]}
 />
 
 <TextCard
