@@ -30,12 +30,13 @@ export function VideoEmbed({ videoId, title, description }: VideoEmbedProps) {
             {isLoaded ? (
               <iframe
                 className="absolute top-0 left-0 w-full h-full rounded-lg"
-                src={`https://www.youtube.com/embed/${videoId}`}
+                src={`https://www.youtube.com/embed/${videoId}?rel=0`}
                 title={title}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
+                loading="lazy"
               />
             ) : (
               <div className="absolute top-0 left-0 w-full h-full bg-surface rounded-lg flex items-center justify-center">
