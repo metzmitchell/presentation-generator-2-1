@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BABRM – Hurricane Helene Impact (Data Story)</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<style>
+  :root {
+    --bg: #0f172a;
+    --panel: #111827;
+    --muted: #94a3b8;
+    --text: #e5e7eb;
+    --accent: #60a5fa;
+    --accent-2: #34d399;
+    --accent-3: #f59e0b;
+    --accent-4: #f97316;
+    --accent-5: #a78bfa;
+    --accent-6: #ef4444;
+    --border: #1f2937;
+    --chip: #1f2937;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: radial-gradient(1200px 800px at 10% -10%, #1f2937 0, #0f172a 60%);
+    color: var(--text);
+    line-height: 1.45;
+  }
+  header {
+    padding: 24px 18px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0));
+    position: sticky; top: 0; z-index: 10; backdrop-filter: blur(6px);
+  }
+  header h1 { margin: 0 0 6px; font-size: 22px; letter-spacing: 0.2px; }
+  header p { margin: 0; color: var(--muted); font-size: 14px; }
+  main { padding: 18px; max-width: 1200px; margin: 0 auto; }
+  .grid {
+    display: grid; grid-template-columns: 1fr; gap: 16px;
+  }
+  @media (min-width: 960px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+    .grid.wide { grid-template-columns: 1.2fr 0.8fr; }
+  }
+  .card {
+    background: linear-gradient(180deg, #0b1220, #0d1324);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: clip;
+  }
+  .card header {
+    position: relative;
+    background: none;
+    border: 0;
+    padding: 14px 16px;
+  }
+  .card h3 {
+    margin: 0; font-size: 16px; letter-spacing: 0.2px;
+  }
+  .card .sub { margin-top: 4px; color: var(--muted); font-size: 13px; }
+  .content { padding: 10px 14px 16px; }
+  .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 8px 14px; border-top: 1px solid var(--border); }
+  .controls input[type="file"] { color: var(--muted); }
+  .pill {
+    display: inline-flex; gap: 8px; align-items: center;
+    padding: 6px 10px; border-radius: 999px; background: var(--chip);
+    color: var(--text); font-size: 12px; border: 1px solid var(--border);
+  }
+  .canvas-wrap { position: relative; width: 100%; height: 360px; }
+  .canvas-tall { height: 520px; }
+  .note { color: var(--muted); font-size: 12px; margin-top: 6px; }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 10px 14px 16px; }
+  .kpis .kpi {
+    background: #0a1020; border: 1px solid var(--border); border-radius: 10px; padding: 12px;
+  }
+  .kpi .num { font-weight: 700; font-size: 20px; }
+  .kpi .lbl { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .quotes { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 960px) { .quotes { grid-template-columns: 1fr 1fr; } }
+  blockquote {
+    margin: 0; padding: 12px 14px;
+    border-left: 3px solid var(--accent);
+    background: #0a1020; border-radius: 8px; border: 1px solid var(--border);
+  }
+  blockquote p { margin: 0; }
+  blockquote footer { margin-top: 8px; color: var(--muted); font-size: 12px; }
+  .legend {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;
+  }
+  .legend .item { display: inline-flex; gap: 6px; align-items: center; color: var(--muted); font-size: 12px; }
+  .legend .dot { width: 10px; height: 10px; border-radius: 999px; display: inline-block; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>BABRM – Hurricane Helene Impact</h1>
+    <p>Simple, reliable visuals from the member survey, with quotes that tell the story.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <header>
+        <h3>Data Source</h3>
+        <div class="sub">BABRM Hurricane Helene Impact Survey Data (67 responses)</div>
+      </header>
+      <div class="controls">
+        <span class="pill" id="loadStatus">Status: loading data…</span>
+        <span class="note">Survey data from BABRM members and local businesses affected by Hurricane Helene. <strong>Run a local server to load data:</strong> <code>python3 -m http.server 5500</code></span>
+      </div>
+    </section>
+
+    <section class="grid wide">
+      <div class="card">
+        <header>
+          <h3>Respondents by Business Category</h3>
+          <div class="sub">How the sample is distributed across the industry</div>
+        </header>
+        <div class="content">
+          <div class="canvas-wrap" id="wrapCategories"><canvas id="chartCategories" aria-label="Respondents by Business Category" role="img"></canvas></div>
+          <div class="note">Dynamic height ensures all categories remain visible.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <header>
+          <h3>Top Damage Types</h3>
+          <div class="sub">Most frequently reported damage types</div>
+        </header>
+        <div class="content">
+          <div class="canvas-wrap" id="wrapDamage"><canvas id="chartDamage" aria-label="Damage Types Frequency" role="img"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <header>
+          <h3>Physical Loss – Distribution</h3>
+          <div class="sub">Counts by reported range</div>
+        </header>
+        <div class="content">
+          <div class="canvas-wrap"><canvas id="chartPhysical" aria-label="Physical Loss Distribution" role="img"></canvas></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <header>
+          <h3>Income Loss – Distribution</h3>
+          <div class="sub">Counts by reported range</div>
+        </header>
+        <div class="content">
+          <div class="canvas-wrap"><canvas id="chartIncome" aria-label="Income Loss Distribution" role="img"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <header>
+          <h3>Coverage Snapshot</h3>
+          <div class="sub">Insurance/grant coverage reported</div>
+        </header>
+        <div class="content">
+          <div class="canvas-wrap"><canvas id="chartCoverage" aria-label="Coverage Snapshot" role="img"></canvas></div>
+          <div class="legend">
+            <span class="item"><span class="dot" style="background:#34d399"></span>Some coverage</span>
+            <span class="item"><span class="dot" style="background:#ef4444"></span>No coverage</span>
+            <span class="item"><span class="dot" style="background:#a78bfa"></span>N/A or Unknown</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <header>
+          <h3>Continue Operating?</h3>
+          <div class="sub">Self-reported plans (Yes / No / Maybe)</div>
+        </header>
+        <div class="content">
+          <div class="canvas-wrap"><canvas id="chartOperating" aria-label="Continue Operating" role="img"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <header>
+        <h3>Physical vs Income Loss (Relationship)</h3>
+        <div class="sub">Scatter plot (use scroll to zoom, drag to pan). Colors indicate BABRM membership.</div>
+      </header>
+      <div class="content">
+        <div class="canvas-wrap canvas-tall"><canvas id="chartScatter" aria-label="Physical vs Income Loss" role="img"></canvas></div>
+        <div class="legend">
+          <span class="item"><span class="dot" style="background:#60a5fa"></span>BABRM Member = Yes</span>
+          <span class="item"><span class="dot" style="background:#f59e0b"></span>BABRM Member = No</span>
+        </div>
+        <div class="note">Note: Each point uses the midpoint of the reported range. Outliers are present; zoom to inspect clusters.</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <header>
+        <h3>Quotes that Matter</h3>
+        <div class="sub">Human impact in their own words</div>
+      </header>
+      <div class="content">
+        <div class="quotes" id="quotes"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <header>
+        <h3>Notes</h3>
+      </header>
+      <div class="content">
+        <ul>
+          <li>Distribution bins are ordered by numeric lower bound for legibility.</li>
+          <li>Coverage categories are inferred: "No" → No coverage; amounts/text → Some coverage; "N/A/Unknown" → N/A/Unknown.</li>
+          <li>Scatter uses range midpoints; values like "Over $2000000" use the stated threshold.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.umd.min.js"></script>
+
+  <script>
+    // ---------- Config ----------
+    const CSV_PATH = '/Users/mitchellmetz/Documents/Operating System/brain/BABRM_Hurricane_Helene_Survey_CLEANED.csv';
+    const COLORS = {
+      bars: '#60a5fa',
+      bars2: '#34d399',
+      bars3: '#a78bfa',
+      danger: '#ef4444',
+      warn: '#f59e0b',
+      ok: '#34d399',
+      gray: '#94a3b8'
+    };
+    const QUOTES = [
+      { text: "65 Year old family business. Community staple. Gone over night.", who: "Britt and Tilson Glass" },
+      { text: "My yard was completely washed away… no funding available for property or yard damage.", who: "Semper Fi Custom Remodeling" },
+      { text: "We went from managing 15–20 active builds to just 2.", who: "Apex Life LLC (General Contractor/Home Builder)" },
+      { text: "We drained our savings… out about $100k… lasting financial hardship.", who: "More Space Place" },
+      { text: "Our road to the office and shop was impassable for several weeks.", who: "J S Miller Construction Co. Inc." },
+      { text: "Loss of near 1 million dollars in revenue… customers thought we were permanently out of business.", who: "Smokey Mountain Lumber" },
+      { text: "Amazing to see the willingness of these business owners and teams to come together.", who: "Hummingbird Insurance" }
+    ];
+
+    // ---------- Utils ----------
+    const fmtCurrency = (n) => {
+      if (n == null || isNaN(n)) return 'N/A';
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
+    };
+    const normalize = (v) => {
+      if (v == null) return null;
+      const s = String(v).trim();
+      if (!s) return null;
+      if (/^(n\/?a|none|na)$/i.test(s)) return null;
+      return s;
+    };
+    const lowerBoundOfRange = (s) => {
+      s = normalize(s);
+      if (!s) return null;
+      if (/^over\s*\$?(\d+)$/i.test(s)) return parseInt(s.match(/^over\s*\$?(\d+)$/i)[1], 10);
+      if (/^\$?\d+$/.test(s)) return parseInt(s.replace(/\$/g, ''), 10);
+      const m = s.match(/^\$?(\d+)\s*-\s*\$?(\d+)$/);
+      if (m) return parseInt(m[1], 10);
+      return null;
+    };
+    const midpointOfRange = (s) => {
+      s = normalize(s);
+      if (!s) return null;
+      if (s === '$0' || s === '0') return 0;
+      if (/^over\s*\$?(\d+)$/i.test(s)) return parseInt(s.match(/^over\s*\$?(\d+)$/i)[1], 10);
+      if (/^\$?\d+$/.test(s)) return parseInt(s.replace(/\$/g, ''), 10);
+      const m = s.match(/^\$?(\d+)\s*-\s*\$?(\d+)$/);
+      if (m) return Math.round((parseInt(m[1], 10) + parseInt(m[2], 10)) / 2);
+      return null;
+    };
+    const classifyCoverage = (s) => {
+      s = normalize(s);
+      if (!s) return 'N/A or Unknown';
+      if (/^no(?:\s|$)/i.test(s)) return 'No coverage';
+      if (/^n\/?a$/i.test(s)) return 'N/A or Unknown';
+      if (/\d/.test(s) || /(approx|grant|insurance|covered|%)/i.test(s)) return 'Some coverage';
+      return 'N/A or Unknown';
+    };
+    const autoHeight = (wrapEl, itemCount, base = 26, min = 200, max = 900) => {
+      const h = Math.min(max, Math.max(min, Math.round(itemCount * base + 80)));
+      wrapEl.style.height = h + 'px';
+    };
+
+    // ---------- Render Quotes ----------
+    const renderQuotes = () => {
+      const cont = document.getElementById('quotes');
+      cont.innerHTML = '';
+      QUOTES.forEach(q => {
+        const el = document.createElement('blockquote');
+        el.innerHTML = '<p>"' + q.text + '"</p><footer>— ' + q.who + '</footer>';
+        cont.appendChild(el);
+      });
+    };
+
+    // ---------- Chart Builders ----------
+    const newBarChart = (ctx, labels, data, horizontal = false, color = COLORS.bars) => {
+      return new Chart(ctx, {
+        type: 'bar',
+        data: { labels, datasets: [{ label: '', data, borderWidth: 0, backgroundColor: color, borderRadius: 6, maxBarThickness: 32 }] },
+        options: {
+          indexAxis: horizontal ? 'y' : 'x',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              ticks: { color: '#cbd5e1', maxRotation: horizontal ? 0 : 45, minRotation: horizontal ? 0 : 0 },
+              grid: { color: 'rgba(148,163,184,0.15)' }
+            },
+            y: {
+              ticks: { color: '#cbd5e1' },
+              grid: { color: 'rgba(148,163,184,0.15)' },
+              beginAtZero: true,
+              precision: 0
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#0b1220',
+              borderColor: '#1f2937',
+              borderWidth: 1
+            },
+            zoom: {
+              zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: horizontal ? 'y' : 'x' },
+              pan: { enabled: true, mode: horizontal ? 'y' : 'x' }
+            }
+          },
+          layout: { padding: 8 }
+        }
+      });
+    };
+
+    const newDonut = (ctx, labels, data, colors) => {
+      return new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels,
+          datasets: [{ data, backgroundColor: colors, borderColor: '#0b1220', borderWidth: 2 }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '60%',
+          plugins: {
+            legend: { position: 'bottom', labels: { color: '#cbd5e1' } },
+            tooltip: { backgroundColor: '#0b1220', borderColor: '#1f2937', borderWidth: 1 }
+          }
+        }
+      });
+    };
+
+    const newScatter = (ctx, points) => {
+      return new Chart(ctx, {
+        type: 'scatter',
+        data: {
+          datasets: [
+            {
+              label: 'BABRM Member: Yes',
+              data: points.filter(p => p.member === 'Yes').map(p => ({ x: p.phys, y: p.income, _name: p.name, _biz: p.biz })),
+              backgroundColor: 'rgba(96,165,250,0.7)',
+              pointRadius: 4
+            },
+            {
+              label: 'BABRM Member: No',
+              data: points.filter(p => p.member !== 'Yes').map(p => ({ x: p.phys, y: p.income, _name: p.name, _biz: p.biz })),
+              backgroundColor: 'rgba(245,158,11,0.7)',
+              pointRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: { display: true, text: 'Physical Loss (USD)', color: '#cbd5e1' },
+              ticks: { color: '#cbd5e1', callback: (v) => fmtCurrency(v) },
+              grid: { color: 'rgba(148,163,184,0.15)' }
+            },
+            y: {
+              title: { display: true, text: 'Income Loss (USD)', color: '#cbd5e1' },
+              ticks: { color: '#cbd5e1', callback: (v) => fmtCurrency(v) },
+              grid: { color: 'rgba(148,163,184,0.15)' }
+            }
+          },
+          plugins: {
+            legend: { position: 'bottom', labels: { color: '#cbd5e1' } },
+            tooltip: {
+              backgroundColor: '#0b1220', borderColor: '#1f2937', borderWidth: 1,
+              callbacks: {
+                label: (ctx) => `${fmtCurrency(ctx.parsed.x)} physical, ${fmtCurrency(ctx.parsed.y)} income`,
+                afterBody: (items) => {
+                  const d = items?.[0]?.raw; if (!d) return '';
+                  const name = d._name || ''; const biz = d._biz || '';
+                  return (name || biz) ? `\n${name}${biz ? ' – ' + biz : ''}` : '';
+                }
+              }
+            },
+            zoom: {
+              zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'xy' },
+              pan: { enabled: true, mode: 'xy' }
+            }
+          },
+          layout: { padding: 8 }
+        }
+      });
+    };
+
+    // ---------- Data Pipeline ----------
+    const state = { charts: {} };
+
+    const renderAll = (rows) => {
+      // 1) Respondents by Business Category
+      const byCat = new Map();
+      rows.forEach(r => {
+        const cat = normalize(r.Business_Category) || 'Unspecified';
+        byCat.set(cat, (byCat.get(cat) || 0) + 1);
+      });
+      const cats = Array.from(byCat.entries()).filter(([_, count]) => count > 1).sort((a,b) => b[1] - a[1]);
+      autoHeight(document.getElementById('wrapCategories'), cats.length, 28);
+      state.charts.categories?.destroy();
+      state.charts.categories = newBarChart(
+        document.getElementById('chartCategories'),
+        cats.map(d => d[0]),
+        cats.map(d => d[1]),
+        true,
+        COLORS.bars
+      );
+
+      // 2) Damage Types
+      const dt = new Map();
+      rows.forEach(r => {
+        const raw = normalize(r.Damage_Types);
+        if (!raw) return;
+        raw.split(';').map(s => s.trim()).filter(Boolean).forEach(t => {
+          dt.set(t, (dt.get(t) || 0) + 1);
+        });
+      });
+      const damage = Array.from(dt.entries()).filter(([_, count]) => count > 1).sort((a,b) => b[1] - a[1]);
+      autoHeight(document.getElementById('wrapDamage'), damage.length, 26);
+      state.charts.damage?.destroy();
+      state.charts.damage = newBarChart(
+        document.getElementById('chartDamage'),
+        damage.map(d => d[0]),
+        damage.map(d => d[1]),
+        true,
+        COLORS.bars2
+      );
+
+      // 3) Distributions (Physical & Income)
+      const dist = (field) => {
+        const map = new Map();
+        rows.forEach(r => {
+          const v = normalize(r[field]);
+          if (!v || /^unknown$/i.test(v)) return;
+          map.set(v, (map.get(v) || 0) + 1);
+        });
+        return Array.from(map.entries())
+          .filter(([_, count]) => count > 1)
+          .map(([k, v]) => ({ range: k, count: v, lb: lowerBoundOfRange(k) ?? Number.MAX_SAFE_INTEGER }))
+          .sort((a,b) => a.lb - b.lb);
+      };
+      const phys = dist('Physical_Loss_Estimate');
+      const income = dist('Income_Loss_Estimate');
+
+      state.charts.physical?.destroy();
+      state.charts.physical = newBarChart(
+        document.getElementById('chartPhysical'),
+        phys.map(d => d.range),
+        phys.map(d => d.count),
+        false,
+        COLORS.bars
+      );
+      state.charts.income?.destroy();
+      state.charts.income = newBarChart(
+        document.getElementById('chartIncome'),
+        income.map(d => d.range),
+        income.map(d => d.count),
+        false,
+        COLORS.bars3
+      );
+
+      // 4) Coverage Snapshot
+      const cov = { 'Some coverage': 0, 'No coverage': 0, 'N/A or Unknown': 0 };
+      rows.forEach(r => { cov[classifyCoverage(r.Insurance_Coverage)]++; });
+      state.charts.coverage?.destroy();
+      state.charts.coverage = newDonut(
+        document.getElementById('chartCoverage'),
+        Object.keys(cov),
+        Object.values(cov),
+        [COLORS.ok, COLORS.danger, COLORS.bars3]
+      );
+
+      // 5) Continue Operating
+      const op = { Yes: 0, No: 0, Maybe: 0 };
+      rows.forEach(r => {
+        const v = normalize(r.Continue_Operating);
+        if (/^yes$/i.test(v)) op.Yes++;
+        else if (/^no$/i.test(v)) op.No++;
+        else if (/^maybe$/i.test(v)) op.Maybe++;
+      });
+      state.charts.operating?.destroy();
+      state.charts.operating = newDonut(
+        document.getElementById('chartOperating'),
+        ['Yes','No','Maybe'],
+        [op.Yes, op.No, op.Maybe],
+        [COLORS.ok, COLORS.danger, COLORS.warn]
+      );
+
+      // 6) Scatter: Physical vs Income midpoints
+      const points = rows.map(r => {
+        const phys = midpointOfRange(r.Physical_Loss_Estimate);
+        const inc = midpointOfRange(r.Income_Loss_Estimate);
+        if (phys == null || inc == null) return null;
+        return {
+          phys, income: inc, member: normalize(r.BABRM_Member) || 'Unknown',
+          name: normalize(r.Full_Name) || '', biz: normalize(r.Business_Name) || ''
+        };
+      }).filter(Boolean).map(p => ({ phys: p.phys, income: p.income, member: p.member, name: p.name, biz: p.biz }));
+      state.charts.scatter?.destroy();
+      state.charts.scatter = newScatter(document.getElementById('chartScatter'), points);
+    };
+
+    // ---------- Loaders ----------
+    const setStatus = (txt) => document.getElementById('loadStatus').textContent = 'Status: ' + txt;
+
+    const parseAndRender = (csvString) => {
+      const parsed = Papa.parse(csvString, { header: true, skipEmptyLines: true });
+      const rows = parsed.data;
+      setStatus('loaded ' + rows.length + ' rows');
+      renderAll(rows);
+      renderQuotes();
+    };
+
+    const loadData = async () => {
+      try {
+        setStatus('loading data…');
+        const res = await fetch(CSV_PATH, { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const text = await res.text();
+        parseAndRender(text);
+        setStatus('data loaded successfully');
+      } catch (e) {
+        setStatus('failed to load data');
+        console.error('Failed to load CSV data:', e);
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', loadData);
+  </script>
+</body>
+</html>

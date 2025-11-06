@@ -15,5 +15,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     BulletList: Components.BulletList,
     TextHeavy: Components.TextHeavy,
     DarkSection: Components.DarkSection,
+    YouTubeEmbed: Components.YouTubeEmbed,
   }
 }
