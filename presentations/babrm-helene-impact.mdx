@@ -13,12 +13,84 @@ description: "Comprehensive analysis of Hurricane Helene's impact on Western Nor
   layout="full-width"
 />
 
+<Section title="Resources" layout="centered" emphasis="normal">
+  <div className="space-y-12">
+    {/* Video Resources */}
+    <div className="space-y-8">
+      <div>
+        <h3 className="text-2xl font-semibold text-primary mb-3">Video Brief</h3>
+        <p className="text-secondary mb-4 text-lg">A concise overview of the Hurricane Helene impact assessment findings.</p>
+        <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%' }}>
+          <iframe 
+            width="560" 
+            height="315" 
+            src="https://www.youtube.com/embed/RM0a2V_vz2c?si=6TDuJ-JPk07_aHmu" 
+            title="YouTube video player" 
+            frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerPolicy="strict-origin-when-cross-origin" 
+            allowFullScreen
+            className="absolute top-0 left-0 w-full h-full rounded-lg"
+            style={{ border: 'none' }}
+          />
+        </div>
+      </div>
+      
+      <div>
+        <h3 className="text-2xl font-semibold text-primary mb-3">Podcast Overview</h3>
+        <p className="text-secondary mb-4 text-lg">A deeper dive into the survey results and analysis to prepare for the meeting.</p>
+        <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%' }}>
+          <iframe 
+            width="560" 
+            height="315" 
+            src="https://www.youtube.com/embed/iBOxDC9s9jw?si=_IHrd_umoaTtZ56Q" 
+            title="YouTube video player" 
+            frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerPolicy="strict-origin-when-cross-origin" 
+            allowFullScreen
+            className="absolute top-0 left-0 w-full h-full rounded-lg"
+            style={{ border: 'none' }}
+          />
+        </div>
+      </div>
+    </div>
+
+    {/* Document Links */}
+    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+      <a
+        href="https://docs.google.com/document/d/1As8Ik2RiBCgrEuqkb8njpdKxc8mpmAYjflUqMyIkF00/edit?usp=sharing"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-3 bg-accent-blue hover:bg-blue-600 text-white font-medium px-8 py-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-accent-blue/20 hover:scale-105"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        View Briefing Document
+      </a>
+      
+      <a
+        href="https://docs.google.com/spreadsheets/d/1VMsrxyXM3HbmR8PveDTxqWXca2GXJt7ScoJJuVy2TEY/edit?usp=sharing"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-3 bg-accent-green hover:bg-green-600 text-white font-medium px-8 py-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-accent-green/20 hover:scale-105"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        View Survey Results
+      </a>
+    </div>
+  </div>
+</Section>
+
 <MetricGrid
   metrics={[
     {label: "BABRM Members", value: 53, unit: "", change: 80},
     {label: "Continue Operating", value: 65, unit: "", change: 98},
-    {label: "Income Loss Reported", value: 53, unit: "", change: 80},
-    {label: "Physical Damage", value: 52, unit: "", change: 79}
+    {label: "Income Loss Reported", value: 33, unit: "", change: 50},
+    {label: "Physical Damage", value: 56, unit: "", change: 85}
   ]}
   columns={4}
 />
@@ -44,7 +116,7 @@ description: "Comprehensive analysis of Hurricane Helene's impact on Western Nor
     {name: "Design", value: 3},
     {name: "Masonry", value: 2},
     {name: "Insurance", value: 2},
-    {name: "Flooring Specialist", value: 2},
+    {name: "Flooring Specialist", value: 3},
     {name: "Education/Certification", value: 1},
     {name: "Cleaning", value: 1}
   ]}
@@ -58,18 +130,18 @@ description: "Comprehensive analysis of Hurricane Helene's impact on Western Nor
   type="bar"
   layout="text-chart"
   data={[
-    {name: "Loss of Income", value: 24},
-    {name: "No Damage", value: 22},
-    {name: "Structural (Home)", value: 16},
-    {name: "Vehicle", value: 10},
-    {name: "Employee Displacement", value: 10},
+    {name: "Loss of Income", value: 33},
+    {name: "No Damage", value: 15},
+    {name: "Structural (Home)", value: 17},
+    {name: "Vehicle", value: 11},
+    {name: "Employee Displacement", value: 11},
     {name: "Road/Bridge Access", value: 10},
     {name: "Structural (Business)", value: 9},
-    {name: "Lost Tools/Materials", value: 8}
+    {name: "Lost Tools/Materials", value: 13}
   ]}
   colorScheme="warning"
 >
-  **Income loss** emerges as the most widespread impact, affecting **36% of businesses**. While **33% reported no direct damage**, the indirect effects through lost work opportunities and employee displacement created significant challenges for the entire industry.
+  **Income loss** emerges as the most widespread impact, affecting **50% of businesses**. While **23% reported no direct damage**, the indirect effects through lost work opportunities and employee displacement created significant challenges for the entire industry.
 </ChartSection>
 
 <BulletList
@@ -78,13 +150,13 @@ description: "Comprehensive analysis of Hurricane Helene's impact on Western Nor
   items={[
     {
       title: "Lost Revenue",
-      content: "**24 businesses** reported income losses, representing **$5M+ in estimated economic impact**",
+      content: "**33 businesses** reported income losses, representing **>$6.2M (Minimum) in estimated economic impact**",
       doodleIcon: "finance/trend-down",
       emphasis: "warning"
     },
     {
       title: "Employee Impact",
-      content: "**10 businesses** lost employees to displacement, affecting workforce stability",
+      content: "**11 businesses** lost employees to displacement, affecting workforce stability",
       doodleIcon: "interface/user",
       emphasis: "warning"
     },
@@ -96,7 +168,7 @@ description: "Comprehensive analysis of Hurricane Helene's impact on Western Nor
     },
     {
       title: "Equipment Loss",
-      content: "**8 businesses** reported loss of tools and materials critical to operations",
+      content: "**13 businesses** reported loss of tools and materials critical to operations",
       doodleIcon: "interface/setting",
       emphasis: "warning"
     }
@@ -116,13 +188,13 @@ description: "Comprehensive analysis of Hurricane Helene's impact on Western Nor
     {name: "$1K-$2.5K", value: 4},
     {name: "$250K-$500K", value: 2},
     {name: "$1M-$2M", value: 1},
-    {name: "Over $2M", value: 1},
+    {name: "Over $2M", value: 2},
     {name: "$11M", value: 1},
     {name: "$2.5K-$5K", value: 1}
   ]}
   colorScheme="error"
 >
-  **52 businesses** reported physical damage, with **$1K-$50K range** being most common. The distribution shows both widespread minor damage and several cases of catastrophic loss exceeding **$1M**.
+  **56 businesses** reported physical damage, with **$1K-$50K range** being most common. The distribution shows both widespread minor damage and several cases of catastrophic loss exceeding **$1M**.
 </ChartSection>
 
 <ChartSection
@@ -150,13 +222,13 @@ description: "Comprehensive analysis of Hurricane Helene's impact on Western Nor
   type="pie"
   layout="full-width"
   data={[
-    {name: "No Coverage", value: 44},
-    {name: "Some Coverage", value: 18},
+    {name: "No Coverage", value: 42},
+    {name: "Some Coverage", value: 20},
     {name: "N/A or Unknown", value: 4}
   ]}
   colorScheme="warning"
 >
-  **27% of businesses** had some form of insurance coverage, while **67%** had no coverage. The **6%** with unknown coverage status highlights the need for better insurance awareness and planning in the building industry.
+  **30% of businesses** had some form of insurance coverage, while **64%** had no coverage. The **6%** with unknown coverage status highlights the need for better insurance awareness and planning in the building industry.
 </ChartSection>
 
 <BulletList
@@ -165,7 +237,7 @@ description: "Comprehensive analysis of Hurricane Helene's impact on Western Nor
   items={[
     {
       title: "Coverage Gaps",
-      content: "**67% of businesses** had no insurance coverage, leaving them vulnerable to future events",
+      content: "**64% of businesses** had no insurance coverage, leaving them vulnerable to future events",
       spaceIcon: "satellite",
       emphasis: "warning"
     },
