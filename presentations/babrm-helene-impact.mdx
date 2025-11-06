@@ -23,42 +23,29 @@ description: "Comprehensive analysis of Hurricane Helene's impact on Western Nor
   columns={4}
 />
 
-<TextCard
-  title="Video Resources"
-  spaceIcon="rocket"
-  emphasis="primary"
-  layout="vertical"
->
-  **Video Brief Overview** - Get a quick, comprehensive overview of the Hurricane Helene impact assessment and key findings from our survey.
-  
-  <YouTubeEmbed 
-    videoId="RM0a2V_vz2c" 
-    title="BABRM Hurricane Helene Impact Video Brief"
-  />
-  
-  **In-Depth Podcast Discussion** - Join us for a deeper dive into the survey results, recovery efforts, and strategic planning for the upcoming meeting.
-  
-  <YouTubeEmbed 
-    videoId="iBOxDC9s9jw" 
-    title="BABRM Hurricane Helene Impact Podcast"
-  />
-</TextCard>
+<VideoEmbed
+  videoId="RM0a2V_vz2c"
+  title="Video Brief"
+  description="A concise overview of the Hurricane Helene impact assessment findings and key insights from the survey."
+/>
 
-<BulletList
-  layout="grid"
-  columns={2}
-  items={[
+<VideoEmbed
+  videoId="iBOxDC9s9jw"
+  title="Podcast Overview"
+  description="A deeper dive into the survey results and community impact, providing comprehensive context to prepare for the meeting."
+/>
+
+<ResourceLinks
+  links={[
     {
-      title: "📄 Meeting Briefing Document",
-      content: "Access the comprehensive briefing document with detailed analysis and discussion points for the upcoming meeting. [Open Google Doc →](https://docs.google.com/document/d/1As8Ik2RiBCgrEuqkb8njpdKxc8mpmAYjflUqMyIkF00/edit?usp=sharing)",
-      spaceIcon: "rocket",
-      emphasis: "highlight"
+      url: "https://docs.google.com/document/d/1As8Ik2RiBCgrEuqkb8njpdKxc8mpmAYjflUqMyIkF00/edit?usp=sharing",
+      title: "Briefing Document",
+      description: "Access the complete briefing document with detailed analysis and recommendations."
     },
     {
-      title: "📊 Survey Results Data",
-      content: "Explore the complete survey results spreadsheet with raw data, detailed responses, and additional analysis. [Open Spreadsheet →](https://docs.google.com/spreadsheets/d/1VMsrxyXM3HbmR8PveDTxqWXca2GXJt7ScoJJuVy2TEY/edit?usp=sharing)",
-      spaceIcon: "satellite",
-      emphasis: "highlight"
+      url: "https://docs.google.com/spreadsheets/d/1VMsrxyXM3HbmR8PveDTxqWXca2GXJt7ScoJJuVy2TEY/edit?usp=sharing",
+      title: "Survey Results Spreadsheet",
+      description: "View the raw survey data and detailed responses from all participants."
     }
   ]}
 />

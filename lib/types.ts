@@ -87,14 +87,6 @@ export interface SectionProps {
   children: React.ReactNode
 }
 
-// YouTubeEmbed Component
-export interface YouTubeEmbedProps {
-  videoId: string       // YouTube video ID (e.g., "RM0a2V_vz2c") or full URL
-  title?: string        // Accessible title for iframe
-  aspectRatio?: '16:9' | '4:3' | '1:1'  // Video aspect ratio
-  className?: string    // Additional CSS classes
-}
-
 // MDX Frontmatter
 export interface PresentationFrontmatter {
   title: string
