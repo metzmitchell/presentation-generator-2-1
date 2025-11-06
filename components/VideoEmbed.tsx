@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { cn } from '@/lib/utils'
+import { useState, useEffect } from 'react'
 
 export interface VideoEmbedProps {
   videoId: string
@@ -10,11 +9,11 @@ export interface VideoEmbedProps {
 }
 
 export function VideoEmbed({ videoId, title, description }: VideoEmbedProps) {
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Load iframe after component mounts
-    setIsLoaded(true)
+    // Only render iframe on client side
+    setMounted(true)
   }, [])
 
   return (
@@ -27,16 +26,18 @@ export function VideoEmbed({ videoId, title, description }: VideoEmbedProps) {
           </div>
           
           <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-            {isLoaded ? (
+            {mounted ? (
               <iframe
                 className="absolute top-0 left-0 w-full h-full rounded-lg"
                 src={`https://www.youtube.com/embed/${videoId}?rel=0`}
                 title={title}
+                width="100%"
+                height="100%"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
-                loading="lazy"
+                style={{ border: 'none' }}
               />
             ) : (
               <div className="absolute top-0 left-0 w-full h-full bg-surface rounded-lg flex items-center justify-center">
