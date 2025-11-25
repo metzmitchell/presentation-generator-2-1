@@ -60,6 +60,12 @@ const presentations = [
     title: 'BABRM Hurricane Helene Impact Report',
     description: 'Comprehensive analysis of Hurricane Helene impact on Western North Carolina building industry',
     filename: 'babrm-helene-impact.mdx'
+  },
+  {
+    slug: 'documentation-roadmap',
+    title: 'The Documentation Roadmap',
+    description: 'What to document at every stage of growth to keep your business running smoothly',
+    filename: 'documentation-roadmap.mdx'
   }
 ]
 

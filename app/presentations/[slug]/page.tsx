@@ -78,6 +78,7 @@ const presentationImports: Record<string, () => Promise<any>> = {
   'august-2025-marketing-performance-presentation': () => import('@/presentations/august-2025-marketing-performance-presentation.mdx'),
   'marketing-direction-for-builders': () => import('@/presentations/marketing-direction-for-builders.mdx'),
   'babrm-helene-impact': () => import('@/presentations/babrm-helene-impact.mdx'),
+  'documentation-roadmap': () => import('@/presentations/documentation-roadmap.mdx'),
 }
 
 export default async function PresentationPage({ params }: PageProps) {
